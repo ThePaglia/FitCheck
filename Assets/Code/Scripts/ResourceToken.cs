@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Token : MonoBehaviour
+public class ResourceToken : MonoBehaviour
 {
 
-    public enum TokenType
+    public enum ResourceTokenType
     {
         Blue,
         Red,
@@ -12,7 +12,7 @@ public class Token : MonoBehaviour
         Black,
         Gold
     }
-    public TokenType tokenType;
+    public ResourceTokenType tokenType;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

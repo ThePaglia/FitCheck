@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 public class Card : MonoBehaviour
 {
-    GameManager gm;
+    public GameManager gm;
     public int points;
 
     // TODO: change to fabric type, for now it's splendor colors

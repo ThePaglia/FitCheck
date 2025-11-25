@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.Interactions;
 public class GameManager : MonoBehaviour
 {
     public List<Card> costumeDeck;
-    public List<Token> tokenBag;
+    public List<ResourceToken> tokenBag;
     public List<Player> players;
 
 
