@@ -7,8 +7,8 @@ public class Player : MonoBehaviour
 {
     public List<ActionToken> actionTokens = new List<ActionToken>(2);
     public List<ResourceToken> resourceTokens = new List<ResourceToken>();
-    public Deck hand = new Deck();
-    public Deck costumesInPlay = new Deck();
+    public List<Card> hand = new List<Card>();
+    public List<Card> costumesInPlay = new List<Card>();
 
     public bool HasAvailableAction()
     {

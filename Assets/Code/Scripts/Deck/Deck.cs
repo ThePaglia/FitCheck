@@ -5,8 +5,10 @@ public class Deck : MonoBehaviour
 {
     public static Deck Instance { get; private set; } //Singleton
     [SerializeField] private ScriptableDeck deck;
-    [SerializeField] private Card _cardPrefab; //our cardPrefab, of which we will make copies with the different CardData
-    private List<Card> deckPile;
+    [SerializeField] private Card cardPrefab; //our cardPrefab, of which we will make copies with the different CardData
+    // TODO: Finish the deck class
+    private List<Card> drawPile = new List<Card>();
+    private List<Card> tablePile = new List<Card>();
 
 
     public List<T> Shuffle<T>(List<T> list)
