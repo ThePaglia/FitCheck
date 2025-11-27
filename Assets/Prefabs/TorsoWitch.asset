@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec337fc1085ee7240a61482adeec3838, type: 3}
+  m_Name: TorsoWitch
+  m_EditorClassIdentifier: Assembly-CSharp::ScriptableCard
+  cardName: Witch
+  description: 'LVL1 (1 card) - Reroll 3 resource tokens from the pool and pick one
+    of the new ones.
+
+    LVL2 (3 cards) - Reroll all resource tokens in the pool
+    and take 3 of the new ones.'
+  points: 3
+  costBlue: 1
+  costRed: 2
+  costGreen: 0
+  costWhite: 0
+  costBlack: 1
+  cardType: 2
+  ability: {fileID: 0}
