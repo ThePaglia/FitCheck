@@ -19,6 +19,7 @@ MonoBehaviour:
     LVL2 (3 cards) - Reroll all resource tokens in the pool
     and take 3 of the new ones.'
   points: 3
+  cardImage: {fileID: 2800000, guid: 7f913d49198c3994491be49c2f3e7717, type: 3}
   costBlue: 1
   costRed: 2
   costGreen: 0

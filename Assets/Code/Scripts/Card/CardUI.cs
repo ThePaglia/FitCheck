@@ -2,27 +2,45 @@ using UnityEngine;
 
 public class CardUI : MonoBehaviour
 {
-    // TODO: Add a 3d model card and set every component
     private Card card;
+    [Header("Prefab Elements")] //references to objects in the card prefab
+    [SerializeField] private MeshRenderer cardRenderer;
+    [SerializeField] private int materialIndex = 0;
+
     private void Awake()
     {
         card = GetComponent<Card>();
+        if (cardRenderer == null)
+        {
+            cardRenderer = GetComponent<MeshRenderer>();
+        }
         SetCardUI();
     }
 
-    //calls Awake every time the inspector/editor gets refreshed
-    //- lets you see changes also in editor no need to start game
-    private void OnValidate()
-    {
-        Awake();
-    }
-
-    public void SetCardUI()
+    private void SetCardUI()
     {
         if (card != null && card.CardData != null)
         {
-            // SetCardTexts();
-            // SetCardImage();
+            SetCardMaterial();
+        }
+    }
+
+    private void SetCardMaterial()
+    {
+        if (card.CardData.cardImage == null) return;
+
+        // Get materials array
+        Material[] sharedMaterials = cardRenderer.sharedMaterials;
+
+        if (materialIndex < sharedMaterials.Length)
+        {
+            sharedMaterials[materialIndex] = new Material(sharedMaterials[materialIndex]);
+            sharedMaterials[materialIndex].mainTexture = card.CardData.cardImage;
+            cardRenderer.materials = sharedMaterials;
+        }
+        else
+        {
+            Debug.LogWarning("Material index is out of range of the materials array.");
         }
     }
 }
