@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afc30158369f91a4296f8a286c285bb2, type: 3}
   m_Name: Deck
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableDeck
-  <CardsInDeck>k__BackingField: []
+  <CardsInDeck>k__BackingField:
+  - {fileID: 11400000, guid: 5bdf691ca0b86a94e875a2ef7593508c, type: 2}
+  - {fileID: 11400000, guid: 3a46702736929b549a1fa20d2316f59f, type: 2}
+  - {fileID: 11400000, guid: 2ba56a142593a6840bd0bd752991d763, type: 2}
+  - {fileID: 11400000, guid: dfb575627b703624ab44533ea4d84392, type: 2}
+  - {fileID: 11400000, guid: eeb66d88a64189c439939ea427db7534, type: 2}
+  - {fileID: 11400000, guid: f94767fc9aa5d984e8c56f80c08220ac, type: 2}
