@@ -22,7 +22,7 @@ public class ScriptableCard : ScriptableObject
         Head,
         Arms,
         Torso,
-        Legs,
+        Pants,
         Shoes
     }
 }

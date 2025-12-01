@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec337fc1085ee7240a61482adeec3838, type: 3}
+  m_Name: PantsSigma
+  m_EditorClassIdentifier: Assembly-CSharp::ScriptableCard
+  cardName: Sigma Male
+  description: 'LVL1 (1 card) - Force a card trade with another player (requires
+    a card in your hand).
+
+    LVL2 (3 cards) - Take a card from another player.'
+  points: 2
+  cardImage: {fileID: 2800000, guid: cbfd5d43b7cf0f44a89305d774e35f07, type: 3}
+  costBlue: 1
+  costRed: 1
+  costGreen: 0
+  costWhite: 0
+  costBlack: 1
+  cardType: 3
+  ability: {fileID: 0}
