@@ -6,12 +6,13 @@ public class Deck : MonoBehaviour
 {
     public static Deck Instance { get; private set; } //Singleton
     [SerializeField] private ScriptableDeck deck;
+    [SerializeField] private Card cardPrefab;
 
     [Header("Visual Settings")]
     [SerializeField] private float heightDecreasePerCard = 0.005f;
     [SerializeField] private float minHeightBeforeInvisible = 0.005f;
     [SerializeField] private MeshRenderer meshRenderer;
-    // TODO: Finish the deck class
+
     private List<Card> drawPile = new List<Card>();
     private List<Card> tablePile = new List<Card>();
 
@@ -21,6 +22,45 @@ public class Deck : MonoBehaviour
         {
             meshRenderer = GetComponent<MeshRenderer>();
         }
+        // Typical singleton declaration
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        SpawnFromScriptableDeck();
+    }
+
+    public Card SpawnCard(ScriptableCard data)
+    {
+        var go = Instantiate(cardPrefab);
+        var card = go.GetComponent<Card>();
+        card.SetUp(data);
+        return card;
+    }
+
+    private void SpawnFromScriptableDeck()
+    {
+        if (deck == null || deck.CardsInDeck == null || cardPrefab == null)
+        {
+            Debug.LogWarning("Deck or Card Prefab is not assigned.");
+            return;
+        }
+        drawPile.Clear();
+        foreach (var cardData in deck.CardsInDeck)
+        {
+            var card = SpawnCard(cardData);
+            drawPile.Add(card);
+            card.gameObject.SetActive(false); // Initially inactive
+        }
+        drawPile = Shuffle(drawPile);
     }
 
     private void Update()

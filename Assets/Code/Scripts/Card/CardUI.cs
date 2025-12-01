@@ -17,7 +17,7 @@ public class CardUI : MonoBehaviour
         SetCardUI();
     }
 
-    private void SetCardUI()
+    public void SetCardUI()
     {
         if (card != null && card.CardData != null)
         {
