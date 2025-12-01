@@ -13,8 +13,8 @@ public class Deck : MonoBehaviour
     [SerializeField] private float minHeightBeforeInvisible = 0.005f;
     [SerializeField] private MeshRenderer meshRenderer;
 
-    private List<Card> drawPile = new List<Card>();
-    private List<Card> tablePile = new List<Card>();
+    public List<Card> drawPile = new List<Card>();
+    public List<Card> tablePile = new List<Card>();
 
     private void Awake()
     {
@@ -38,7 +38,7 @@ public class Deck : MonoBehaviour
         SpawnFromScriptableDeck();
     }
 
-    public Card SpawnCard(ScriptableCard data)
+    private Card SpawnCard(ScriptableCard data)
     {
         var go = Instantiate(cardPrefab);
         var card = go.GetComponent<Card>();
@@ -77,10 +77,36 @@ public class Deck : MonoBehaviour
                 if (hit.collider.gameObject == gameObject)
                 {
                     Debug.Log("Deck clicked!");
-                    ShrinkDeck();
+                    OnDeckClicked();
                 }
             }
         }
+    }
+
+    private void OnDeckClicked()
+    {
+        // Notify GameManager to draw card for current player
+        bool drew = GameManager.Instance != null && GameManager.Instance.OnDeckClicked();
+
+        if (drew)
+        {
+            // Then shrink the deck visually
+            ShrinkDeck();
+        }
+    }
+    public Card DrawCard()
+    {
+        if (drawPile.Count == 0)
+        {
+            Debug.Log("No more cards to draw.");
+            return null;
+        }
+
+        Card drawnCard = drawPile[0];
+        drawPile.RemoveAt(0);
+        drawnCard.gameObject.SetActive(true);
+
+        return drawnCard;
     }
 
     private void ShrinkDeck()

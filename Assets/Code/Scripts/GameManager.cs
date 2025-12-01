@@ -3,22 +3,47 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
     public Deck costumeDeck;
-    public Deck costumesInPlay;
     public List<ResourceToken> tokenBag;
     public List<Player> players;
+    public TurnManager turnManager;
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool OnDeckClicked()
     {
+        if (turnManager == null)
+        {
+            Debug.LogWarning("TurnManager not set!");
+            return false;
+        }
 
+        Player currentPlayer = turnManager.GetCurrentPlayer();
+
+        if (currentPlayer == null)
+        {
+            Debug.LogWarning("No current player!");
+            return false;
+        }
+
+        if (!turnManager.CanCurrentPlayerAct())
+        {
+            Debug.Log("No available action tokens for current player.");
+            return false;
+        }
+        currentPlayer.UseActionToken(); // Drawing costs an action
+        currentPlayer.Draw();
+        return true;
     }
 }

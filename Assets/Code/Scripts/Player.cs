@@ -36,15 +36,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Draw()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        Card card = Deck.Instance.DrawCard();
+        if (card != null)
+        {
+            hand.Add(card);
+            // TODO: Update card position to player's hand area
+        }
     }
 }
