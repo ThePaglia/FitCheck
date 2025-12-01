@@ -19,7 +19,7 @@ public class ScriptableCard : ScriptableObject
 
     public enum CardType
     {
-        Head,
+        Mask,
         Arms,
         Torso,
         Pants,

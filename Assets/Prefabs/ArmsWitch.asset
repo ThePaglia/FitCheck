@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec337fc1085ee7240a61482adeec3838, type: 3}
+  m_Name: ArmsWitch
+  m_EditorClassIdentifier: Assembly-CSharp::ScriptableCard
+  cardName: Witch
+  description: 'LVL1 (1 card) - Reroll 3 resource tokens from the pool and take one
+    from the new ones.
+
+    LVL2 (3 cards) - Reroll all resource tokens and take
+    3 of the new ones.'
+  points: 2
+  cardImage: {fileID: 2800000, guid: 1c89709b596e9a14fb8e44ccf8e382f4, type: 3}
+  costBlue: 0
+  costRed: 0
+  costGreen: 1
+  costWhite: 1
+  costBlack: 0
+  cardType: 1
+  ability: {fileID: 0}
