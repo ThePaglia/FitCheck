@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public List<Card> hand = new List<Card>();
     public List<Card> costumesInPlay = new List<Card>();
 
+    private PlayerUI playerUI;
+
     public bool HasAvailableAction()
     {
         return actionTokens.Any(token => token.isAvailable);
@@ -42,7 +44,7 @@ public class Player : MonoBehaviour
         if (card != null)
         {
             hand.Add(card);
-            // TODO: Update card position to player's hand area
+            playerUI.UpdateHandUI(hand);
         }
     }
 }

@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f9411a1edcab14089df06548df5ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  costumeDeck: {fileID: 0}
+  costumeDeck: {fileID: 6703038111399677966, guid: 70bdfee1917fcf74f8c08f1af3dab6bf, type: 3}
   tokenBag: []
   players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  turnManager: {fileID: 0}
+  - {fileID: 6480741023716039740, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+  - {fileID: 6480741023716039740, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+  - {fileID: 6480741023716039740, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+  - {fileID: 6480741023716039740, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+  turnManager: {fileID: 8779278547109315296, guid: f544271df48caa34a9c7a5dd6d66416a, type: 3}

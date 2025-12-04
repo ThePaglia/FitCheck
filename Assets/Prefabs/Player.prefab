@@ -55,6 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5363528900359618006}
   - component: {fileID: 6480741023716039740}
+  - component: {fileID: 733763471271395830}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -97,6 +98,19 @@ MonoBehaviour:
   resourceTokens: []
   hand: []
   costumesInPlay: []
+--- !u!114 &733763471271395830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4793939934483672006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188b363f6681167449317e08a698a0b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUI
+  handUI: {fileID: 0}
 --- !u!1 &6165535898548613650
 GameObject:
   m_ObjectHideFlags: 0
