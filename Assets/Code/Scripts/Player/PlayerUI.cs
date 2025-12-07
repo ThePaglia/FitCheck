@@ -9,4 +9,8 @@ public class PlayerUI : MonoBehaviour
     {
         handUI.UpdateHandUI(hand);
     }
+    public void AnimateCardToHand(Card card)
+    {
+        handUI.AnimateCardToHand(card);
+    }
 }

@@ -12,6 +12,11 @@ public class Player : MonoBehaviour
 
     private PlayerUI playerUI;
 
+    private void Awake()
+    {
+        playerUI = GetComponent<PlayerUI>();
+    }
+
     public bool HasAvailableAction()
     {
         return actionTokens.Any(token => token.isAvailable);
@@ -44,6 +49,7 @@ public class Player : MonoBehaviour
         if (card != null)
         {
             hand.Add(card);
+            playerUI.AnimateCardToHand(card);
             playerUI.UpdateHandUI(hand);
         }
     }
