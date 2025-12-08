@@ -201,6 +201,8 @@ MonoBehaviour:
   resourceTokens: []
   hand: []
   costumesInPlay: []
+  handLimit: 3
+  resourceTokenLimit: 6
 --- !u!114 &733763471271395830
 MonoBehaviour:
   m_ObjectHideFlags: 0

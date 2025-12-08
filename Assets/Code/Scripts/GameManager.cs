@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public bool OnDeckClicked()
+    private bool CheckTurnManagerAndCurrentPlayer()
     {
         if (turnManager == null)
         {
@@ -42,8 +42,44 @@ public class GameManager : MonoBehaviour
             Debug.Log("No available action tokens for current player.");
             return false;
         }
+        return true;
+    }
+
+    public bool OnDeckClicked()
+    {
+        if (!CheckTurnManagerAndCurrentPlayer())
+        {
+            return false;
+        }
+
+        Player currentPlayer = turnManager.GetCurrentPlayer();
+        if (currentPlayer.hand.Count >= currentPlayer.handLimit)
+        {
+            Debug.Log("Hand limit reached. Cannot draw more cards.");
+            return false;
+        }
+
         currentPlayer.UseActionToken(); // Drawing costs an action
-        currentPlayer.Draw();
+        currentPlayer.DrawCard();
+        return true;
+    }
+
+    public bool OnTokenBagClicked()
+    {
+        if (!CheckTurnManagerAndCurrentPlayer())
+        {
+            return false;
+        }
+
+        Player currentPlayer = turnManager.GetCurrentPlayer();
+        if (currentPlayer.resourceTokens.Count >= currentPlayer.resourceTokenLimit)
+        {
+            Debug.Log("Resource token limit reached. Cannot draw more tokens.");
+            return false;
+        }
+
+        currentPlayer.UseActionToken(); // Drawing costs an action
+        currentPlayer.DrawResourceToken();
         return true;
     }
 }

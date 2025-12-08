@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public List<ResourceToken> resourceTokens = new List<ResourceToken>();
     public List<Card> hand = new List<Card>();
     public List<Card> costumesInPlay = new List<Card>();
+    public int handLimit = 3;
+    public int resourceTokenLimit = 6;
 
     private PlayerUI playerUI;
 
@@ -43,14 +45,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Draw()
+    public void DrawCard()
     {
-        Card card = Deck.Instance.DrawCard();
+        Card card = Deck.Instance.Draw();
         if (card != null)
         {
             hand.Add(card);
             playerUI.AnimateCardToHand(card);
             playerUI.UpdateHandUI(hand);
+        }
+    }
+
+    public void DrawResourceToken(){
+        ResourceToken token = ResourceTokenBag.Instance.Draw();
+        if (token != null)
+        {
+            resourceTokens.Add(token);
+            // TODO: Add UI logic
         }
     }
 }

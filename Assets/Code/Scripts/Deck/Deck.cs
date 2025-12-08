@@ -38,14 +38,6 @@ public class Deck : MonoBehaviour
         SpawnFromScriptableDeck();
     }
 
-    private Card SpawnCard(ScriptableCard data)
-    {
-        var go = Instantiate(cardPrefab);
-        var card = go.GetComponent<Card>();
-        card.SetUp(data);
-        return card;
-    }
-
     private void SpawnFromScriptableDeck()
     {
         if (deck == null || deck.CardsInDeck == null || cardPrefab == null)
@@ -63,6 +55,14 @@ public class Deck : MonoBehaviour
         drawPile = Shuffle(drawPile);
     }
 
+    private Card SpawnCard(ScriptableCard data)
+    {
+        var go = Instantiate(cardPrefab, meshRenderer.transform.position + Vector3.up * 0.1f, Quaternion.identity, transform);
+        Card card = go.GetComponent<Card>();
+        card.SetUp(data);
+        return card;
+    }
+
     private void Update()
     {
         // Use Raycasting to detect mouse clicks on the deck
@@ -73,7 +73,6 @@ public class Deck : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log($"Hit: {hit.collider.gameObject.name}");
                 if (hit.collider.gameObject == gameObject)
                 {
                     Debug.Log("Deck clicked!");
@@ -94,7 +93,8 @@ public class Deck : MonoBehaviour
             ShrinkDeck();
         }
     }
-    public Card DrawCard()
+
+    public Card Draw()
     {
         if (drawPile.Count == 0)
         {
