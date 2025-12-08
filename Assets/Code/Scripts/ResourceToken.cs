@@ -5,12 +5,12 @@ public class ResourceToken : MonoBehaviour
 
     public enum ResourceTokenType
     {
-        Blue,
-        Red,
-        Green,
-        White,
-        Black,
-        Gold
+        DuctTape,
+        Glue,
+        Wire,
+        Fabric,
+        Plastic,
+        Glitter
     }
     public ResourceTokenType tokenType;
 
