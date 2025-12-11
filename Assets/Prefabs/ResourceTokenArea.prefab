@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6809073104984905400}
   - component: {fileID: 3515910355068483259}
   m_Layer: 0
-  m_Name: ResourceTokenDisplay
+  m_Name: ResourceTokenArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
