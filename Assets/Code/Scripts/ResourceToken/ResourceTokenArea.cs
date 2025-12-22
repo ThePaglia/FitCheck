@@ -3,5 +3,4 @@ using UnityEngine;
 
 public class ResourceTokenArea : MonoBehaviour
 {
-    // TODO: Copilot has it
 }

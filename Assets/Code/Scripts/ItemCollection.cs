@@ -6,6 +6,7 @@ public class ItemCollection : MonoBehaviour
     // It will use the instance pattern and instance will be removed from those classes
     // Instance and Awake singleton declaration
     // Update with raycast to check clicked, OnCollectionClicked, DrawItem, Shuffle.
+    // TODO: Check if it makes sense to implement it
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
