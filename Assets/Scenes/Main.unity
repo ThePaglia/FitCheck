@@ -753,6 +753,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6480741023716039740, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+      propertyPath: handLimit
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8456607739738812881, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
       propertyPath: m_Camera
       value: 
@@ -927,6 +931,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3539073217964564086, guid: 80dcfa925f5ab424ba2d0fc98dcfbe04, type: 3}
+      propertyPath: resourceTokenPrefab
+      value: 
+      objectReference: {fileID: 3603382418258384832, guid: 6cde307ad06aa014b8951f84bcfb999c, type: 3}
     - target: {fileID: 3864745124341615646, guid: 80dcfa925f5ab424ba2d0fc98dcfbe04, type: 3}
       propertyPath: m_Name
       value: ResourceTokenBag

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class ResourceTokenBag : MonoBehaviour
 {
     public static ResourceTokenBag Instance { get; private set; } //Singleton
-    [SerializeField] private GameObject resourceTokenPrefab;
+    [SerializeField] private ResourceToken resourceTokenPrefab;
     [SerializeField] private Transform pouchContainer;
     private List<ResourceToken> drawPile = new List<ResourceToken>();
 
@@ -43,7 +43,7 @@ public class ResourceTokenBag : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            GameObject tokenObj = Instantiate(resourceTokenPrefab, pouchContainer);
+            ResourceToken tokenObj = Instantiate(resourceTokenPrefab, pouchContainer);
             ResourceToken resourceToken = tokenObj.GetComponent<ResourceToken>();
             resourceToken.gameObject.SetActive(false);
             if (resourceToken != null)

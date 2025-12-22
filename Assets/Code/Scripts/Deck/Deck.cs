@@ -53,7 +53,7 @@ public class Deck : MonoBehaviour
 
     private Card SpawnCard(ScriptableCard data)
     {
-        var go = Instantiate(cardPrefab, meshRenderer.transform.position + Vector3.up * 0.1f, Quaternion.identity, transform);
+        Card go = Instantiate(cardPrefab, meshRenderer.transform.position + Vector3.up * 0.1f, Quaternion.identity, transform);
         Card card = go.GetComponent<Card>();
         card.SetUp(data);
         return card;
