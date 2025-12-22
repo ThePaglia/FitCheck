@@ -45,9 +45,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void DrawCard()
+    public void DrawCard(Card card)
     {
-        Card card = Deck.Instance.Draw();
         if (card != null)
         {
             hand.Add(card);

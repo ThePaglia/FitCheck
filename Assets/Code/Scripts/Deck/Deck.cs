@@ -14,7 +14,6 @@ public class Deck : MonoBehaviour
     [SerializeField] private MeshRenderer meshRenderer;
 
     public List<Card> drawPile = new List<Card>();
-    public List<Card> tablePile = new List<Card>();
 
     private void Awake()
     {
@@ -31,10 +30,7 @@ public class Deck : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start()
-    {
         SpawnFromScriptableDeck();
     }
 
@@ -66,31 +62,18 @@ public class Deck : MonoBehaviour
     private void Update()
     {
         // Use Raycasting to detect mouse clicks on the deck
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-            RaycastHit hit;
+        if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
 
-            if (Physics.Raycast(ray, out hit))
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.gameObject == gameObject)
             {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    Debug.Log("Deck clicked!");
-                    OnDeckClicked();
-                }
+                Debug.Log("Deck clicked!");
+                GameManager.Instance.OnDeckClicked();
             }
-        }
-    }
-
-    private void OnDeckClicked()
-    {
-        // Notify GameManager to draw card for current player
-        bool drew = GameManager.Instance != null && GameManager.Instance.OnDeckClicked();
-
-        if (drew)
-        {
-            // Then shrink the deck visually
-            ShrinkDeck();
         }
     }
 
@@ -105,6 +88,8 @@ public class Deck : MonoBehaviour
         Card drawnCard = drawPile[0];
         drawPile.RemoveAt(0);
         drawnCard.gameObject.SetActive(true);
+
+        ShrinkDeck();
 
         return drawnCard;
     }

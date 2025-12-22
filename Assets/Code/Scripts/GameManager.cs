@@ -4,8 +4,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public Deck costumeDeck;
-    public List<ResourceToken> tokenBag;
     public List<Player> players;
     public TurnManager turnManager;
 
@@ -60,7 +58,9 @@ public class GameManager : MonoBehaviour
         }
 
         currentPlayer.UseActionToken(); // Drawing costs an action
-        currentPlayer.DrawCard();
+        Card drawnCard = Deck.Instance.Draw();
+        currentPlayer.DrawCard(drawnCard);
+
         return true;
     }
 
@@ -80,6 +80,26 @@ public class GameManager : MonoBehaviour
 
         currentPlayer.UseActionToken(); // Drawing costs an action
         currentPlayer.DrawResourceToken();
+
+        return true;
+    }
+
+    public bool OnCardInPlayAreaClicked(Card card)
+    {
+        if (!CheckTurnManagerAndCurrentPlayer())
+        {
+            return false;
+        }
+
+        Player currentPlayer = turnManager.GetCurrentPlayer();
+        if (currentPlayer.hand.Count >= currentPlayer.handLimit)
+        {
+            Debug.Log("Hand limit reached. Cannot draw more cards.");
+            return false;
+        }
+        currentPlayer.UseActionToken(); // Drawing costs an action
+        currentPlayer.DrawCard(card);
+
         return true;
     }
 }

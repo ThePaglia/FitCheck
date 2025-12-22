@@ -20,10 +20,7 @@ public class ResourceTokenBag : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start()
-    {
         InitializeTokenBag();
     }
 
@@ -60,25 +57,19 @@ public class ResourceTokenBag : MonoBehaviour
     private void Update()
     {
         // Use Raycasting to detect mouse clicks on the deck
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-            RaycastHit hit;
+        if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
 
-            if (Physics.Raycast(ray, out hit))
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.gameObject == gameObject)
             {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    Debug.Log("Resource Token Bag clicked!");
-                    OnTokenBagClicked();
-                }
+                Debug.Log("Resource Token Bag clicked!");
+                GameManager.Instance.OnTokenBagClicked();
             }
         }
-    }
-
-    private void OnTokenBagClicked()
-    {
-        bool drew = GameManager.Instance != null && GameManager.Instance.OnTokenBagClicked();
     }
 
     public ResourceToken Draw()
