@@ -79,6 +79,8 @@ public class GameManager : MonoBehaviour
         }
 
         currentPlayer.UseActionToken(); // Drawing costs an action
+        // Draw two random resource tokens
+        currentPlayer.DrawResourceToken();
         currentPlayer.DrawResourceToken();
 
         return true;
