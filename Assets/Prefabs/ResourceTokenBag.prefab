@@ -153,5 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39624e13f04dd0a489a436d629044277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceTokenPouch
-  resourceTokenPrefab: {fileID: 1200798100300168098, guid: 6cde307ad06aa014b8951f84bcfb999c, type: 3}
-  pouchContainer: {fileID: 5527449589113906704}
+  resourceTokenPrefab: {fileID: 3603382418258384832, guid: 6cde307ad06aa014b8951f84bcfb999c, type: 3}
+  initialNormalResourceTokenCount: 7
+  initialGlitterResourceTokenCount: 5

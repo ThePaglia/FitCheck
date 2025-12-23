@@ -12,5 +12,5 @@ public class ResourceToken : MonoBehaviour
         Plastic,
         Glitter
     }
-    public ResourceTokenType tokenType;
+    public ResourceTokenType resourceTokenType;
 }

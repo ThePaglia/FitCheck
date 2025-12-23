@@ -58,30 +58,9 @@ public class GameManager : MonoBehaviour
         }
 
         currentPlayer.UseActionToken(); // Drawing costs an action
+
         Card drawnCard = Deck.Instance.Draw();
         currentPlayer.DrawCard(drawnCard);
-
-        return true;
-    }
-
-    public bool OnTokenBagClicked()
-    {
-        if (!CheckTurnManagerAndCurrentPlayer())
-        {
-            return false;
-        }
-
-        Player currentPlayer = turnManager.GetCurrentPlayer();
-        if (currentPlayer.resourceTokens.Count >= currentPlayer.resourceTokenLimit)
-        {
-            Debug.Log("Resource token limit reached. Cannot draw more tokens.");
-            return false;
-        }
-
-        currentPlayer.UseActionToken(); // Drawing costs an action
-        // Draw two random resource tokens
-        currentPlayer.DrawResourceToken();
-        currentPlayer.DrawResourceToken();
 
         return true;
     }
@@ -101,6 +80,53 @@ public class GameManager : MonoBehaviour
         }
         currentPlayer.UseActionToken(); // Drawing costs an action
         currentPlayer.DrawCard(card);
+
+        return true;
+    }
+
+    public bool OnResourceTokenBagClicked()
+    {
+        if (!CheckTurnManagerAndCurrentPlayer())
+        {
+            return false;
+        }
+
+        Player currentPlayer = turnManager.GetCurrentPlayer();
+        if (currentPlayer.resourceTokens.Count >= currentPlayer.resourceTokenLimit)
+        {
+            Debug.Log("Resource token limit reached. Cannot draw more tokens.");
+            return false;
+        }
+
+        currentPlayer.UseActionToken(); // Drawing costs an action
+
+        // Draw two random resource tokens
+        ResourceToken drawnResourceToken = ResourceTokenBag.Instance.Draw();
+        currentPlayer.DrawResourceToken(drawnResourceToken);
+
+        drawnResourceToken = ResourceTokenBag.Instance.Draw();
+        currentPlayer.DrawResourceToken(drawnResourceToken);
+
+
+        return true;
+    }
+
+    // TODO: Let the player pick 2 normal tokens for 1 action token but only 1 glitter (joker, counts as every other normal one) one for 1 action token
+    public bool OnResourceTokenInPlayAreaClicked(ResourceToken token)
+    {
+        if (!CheckTurnManagerAndCurrentPlayer())
+        {
+            return false;
+        }
+
+        Player currentPlayer = turnManager.GetCurrentPlayer();
+        if (currentPlayer.resourceTokens.Count >= currentPlayer.resourceTokenLimit)
+        {
+            Debug.Log("Resource token limit reached. Cannot draw more tokens.");
+            return false;
+        }
+        currentPlayer.UseActionToken(); // Drawing costs an action
+        currentPlayer.DrawResourceToken(token);
 
         return true;
     }

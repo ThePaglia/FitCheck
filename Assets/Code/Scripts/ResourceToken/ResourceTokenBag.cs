@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static ResourceToken;
 
 public class ResourceTokenBag : MonoBehaviour
 {
     public static ResourceTokenBag Instance { get; private set; } //Singleton
     [SerializeField] private ResourceToken resourceTokenPrefab;
-    [SerializeField] private Transform pouchContainer;
+    [SerializeField] private int initialNormalResourceTokenCount = 7;
+    [SerializeField] private int initialGlitterResourceTokenCount = 5;
+
     private List<ResourceToken> drawPile = new List<ResourceToken>();
 
     private void Awake()
@@ -26,29 +29,29 @@ public class ResourceTokenBag : MonoBehaviour
 
     private void InitializeTokenBag()
     {
-        // Create 7 of each normal token type
-        CreateTokens(ResourceToken.ResourceTokenType.DuctTape, 7);
-        CreateTokens(ResourceToken.ResourceTokenType.Glue, 7);
-        CreateTokens(ResourceToken.ResourceTokenType.Wire, 7);
-        CreateTokens(ResourceToken.ResourceTokenType.Fabric, 7);
-        CreateTokens(ResourceToken.ResourceTokenType.Plastic, 7);
-
+        // Create 7 of each normal token type, 35 total
+        CreateTokens(ResourceTokenType.DuctTape, initialNormalResourceTokenCount);
+        CreateTokens(ResourceTokenType.Glue, initialNormalResourceTokenCount);
+        CreateTokens(ResourceTokenType.Wire, initialNormalResourceTokenCount);
+        CreateTokens(ResourceTokenType.Fabric, initialNormalResourceTokenCount);
+        CreateTokens(ResourceTokenType.Plastic, initialNormalResourceTokenCount);
+        
         // Create 5 glitter tokens
-        CreateTokens(ResourceToken.ResourceTokenType.Glitter, 5);
+        CreateTokens(ResourceTokenType.Glitter, initialGlitterResourceTokenCount);
 
         drawPile = Shuffle(drawPile);
     }
 
-    private void CreateTokens(ResourceToken.ResourceTokenType tokenType, int count)
+    private void CreateTokens(ResourceTokenType resourceTokenType, int count)
     {
         for (int i = 0; i < count; i++)
         {
-            ResourceToken tokenObj = Instantiate(resourceTokenPrefab, pouchContainer);
+            ResourceToken tokenObj = Instantiate(resourceTokenPrefab, transform);
             ResourceToken resourceToken = tokenObj.GetComponent<ResourceToken>();
             resourceToken.gameObject.SetActive(false);
             if (resourceToken != null)
             {
-                resourceToken.tokenType = tokenType;
+                resourceToken.resourceTokenType = resourceTokenType;
                 drawPile.Add(resourceToken);
             }
         }
@@ -67,7 +70,7 @@ public class ResourceTokenBag : MonoBehaviour
             if (hit.collider.gameObject == gameObject)
             {
                 Debug.Log("Resource Token Bag clicked!");
-                GameManager.Instance.OnTokenBagClicked();
+                GameManager.Instance.OnResourceTokenBagClicked();
             }
         }
     }

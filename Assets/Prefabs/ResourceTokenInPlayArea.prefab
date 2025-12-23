@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6809073104984905400}
   - component: {fileID: 3515910355068483259}
   m_Layer: 0
-  m_Name: ResourceTokenArea
+  m_Name: ResourceTokenInPlayArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4594717a377f7499bdd2d0aa4d240b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceTokenDisplay
+  spacing: 0.2
+  stackHeight: 0.05
+  initialResourceTokenCount: 6
+  prefabScale: {fileID: 3603382418258384832, guid: 6cde307ad06aa014b8951f84bcfb999c, type: 3}

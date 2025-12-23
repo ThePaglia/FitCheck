@@ -7,10 +7,10 @@ public class CardsInPlayArea : MonoBehaviour
     [SerializeField] private float columnSpacing = 0.23f;
     [SerializeField] private float rowSpacing = 0.3f;
     [SerializeField] private int initialCardCount = 4;
-    [SerializeField] private int columns = 5;
+    [SerializeField] private int columns = 4;
     [SerializeField] private Card prefabScale;
 
-    public List<Card> cardsInPlay = new List<Card>();
+    private List<Card> cardsInPlay = new List<Card>();
 
     private void Start()
     {
@@ -72,7 +72,7 @@ public class CardsInPlayArea : MonoBehaviour
                     // Remove from grid and optionally refill the slot
                     cardsInPlay.RemoveAt(slot);
 
-                    Card replacement = Deck.Instance.Draw(); // Deck.Instance.Draw
+                    Card replacement = Deck.Instance.Draw();
                     if (replacement != null)
                     {
                         PlaceCard(replacement, slot);

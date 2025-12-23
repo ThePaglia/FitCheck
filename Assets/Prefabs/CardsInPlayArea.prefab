@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69c39caafb6b754ea32daae69199de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckArea
-  deck: {fileID: 6703038111399677966, guid: 70bdfee1917fcf74f8c08f1af3dab6bf, type: 3}
   columnSpacing: 0.23
   rowSpacing: 0.3
   initialCardCount: 4
-  columns: 5
+  columns: 4
   prefabScale: {fileID: 1392477151726718133, guid: f47667dc003888542b4bc1ef952db538, type: 3}
+  cardsInPlay: []
