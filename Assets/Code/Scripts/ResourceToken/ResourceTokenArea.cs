@@ -99,28 +99,28 @@ public class ResourceTokenArea : MonoBehaviour
         }
     }
 
-    private bool IsTokenInPlay(ResourceToken token)
+    private bool IsTokenInPlay(ResourceToken resourceToken)
     {
         foreach (var list in resourceTokensByType.Values)
         {
-            if (list.Contains(token)) return true;
+            if (list.Contains(resourceToken)) return true;
         }
         return false;
     }
 
-    private void RemoveTokenFromColumn(ResourceToken token)
+    private void RemoveTokenFromColumn(ResourceToken resourceToken)
     {
-        ResourceToken.ResourceTokenType tokenType = token.resourceTokenType;
-        if (resourceTokensByType[tokenType].Contains(token))
+        ResourceTokenType tokenType = resourceToken.resourceTokenType;
+        if (resourceTokensByType[tokenType].Contains(resourceToken))
         {
-            resourceTokensByType[tokenType].Remove(token);
+            resourceTokensByType[tokenType].Remove(resourceToken);
 
             // Restack remaining tokens in this column
             RestackColumn(tokenType);
         }
     }
 
-    private void RestackColumn(ResourceToken.ResourceTokenType tokenType)
+    private void RestackColumn(ResourceTokenType tokenType)
     {
         int columnIndex = (int)tokenType;
         Vector3 columnPos = colPositions[columnIndex];

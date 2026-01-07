@@ -55,11 +55,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void DrawResourceToken(ResourceToken resourceToken){
+    public void DrawResourceToken(ResourceToken resourceToken)
+    {
         if (resourceToken != null)
         {
             resourceTokens.Add(resourceToken);
-            // TODO: Add UI logic similar to DrawCard in PlayerUI, ResourceTokenUI
+            playerUI.UpdateResourceTokenUI(resourceTokens);
         }
     }
 }

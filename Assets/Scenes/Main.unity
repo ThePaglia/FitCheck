@@ -757,6 +757,14 @@ PrefabInstance:
       propertyPath: handLimit
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7207973285677733629, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 7207973285677733629, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 148
+      objectReference: {fileID: 0}
     - target: {fileID: 8456607739738812881, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
       propertyPath: m_Camera
       value: 
