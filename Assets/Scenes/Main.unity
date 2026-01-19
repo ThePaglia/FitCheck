@@ -950,7 +950,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6480741023716039740, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
       propertyPath: handLimit
-      value: 3
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6973817259686508413, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
       propertyPath: m_AnchorMax.y

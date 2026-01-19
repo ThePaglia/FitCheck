@@ -130,4 +130,6 @@ public class GameManager : MonoBehaviour
 
         return true;
     }
+
+    // TODO: Make craft card function
 }

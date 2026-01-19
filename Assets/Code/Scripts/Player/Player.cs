@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // TODO: Make the crafted cards area that use costumesInPlay
     public List<ActionToken> actionTokens = new List<ActionToken>(2);
     public List<ResourceToken> resourceTokens = new List<ResourceToken>();
     public List<Card> hand = new List<Card>();
@@ -61,6 +62,14 @@ public class Player : MonoBehaviour
         {
             resourceTokens.Add(resourceToken);
             playerUI.UpdateResourceTokenUI(resourceTokens);
+        }
+    }
+
+    public void CraftCard(Card card) {
+        if (card != null) {
+            hand.Remove(card);
+            // playerUI.AnimateCardToCraftedArea(card);
+            // playerUI.UpdateHandUI(hand);
         }
     }
 }

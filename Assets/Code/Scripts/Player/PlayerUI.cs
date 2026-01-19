@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Consider refactoring the UI into a World Space UI
 public class PlayerUI : MonoBehaviour
 {
     public HandUI handUI;
@@ -19,4 +20,6 @@ public class PlayerUI : MonoBehaviour
     {
         resourceTokenUI.UpdateResourceTokenUI(resourceTokens);
     }
+
+    // TODO: Make in hand cards clickable and craftable if possible
 }

@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class HandUI : MonoBehaviour
 {
-    private Transform handContainer;
+    private RectTransform handContainer;
     private float cardMoveTime = 0.5f;
     private float fanAngle = 15f;
     private float fanRadius = 500f;
 
     private void Awake()
     {
-        handContainer = GetComponent<Transform>();
+        handContainer = GetComponent<RectTransform>();
     }
 
     public void UpdateHandUI(List<Card> hand)
@@ -31,7 +31,7 @@ public class HandUI : MonoBehaviour
         // Disable 3D rendering
         MeshRenderer meshRenderer = card.GetComponent<MeshRenderer>();
         if (meshRenderer != null) meshRenderer.enabled = false;
-        
+
         Collider collider = card.GetComponent<Collider>();
         if (collider != null) collider.enabled = false;
 
@@ -64,7 +64,7 @@ public class HandUI : MonoBehaviour
         Vector3 targetLocalPos = handContainer.position;
 
         // Start animation
-        StartCoroutine(MoveCardToHand(cardRect, localStartPos, targetLocalPos));
+        MoveCardToHand(cardRect, localStartPos, targetLocalPos);
     }
 
     private IEnumerator MoveCardToHand(RectTransform cardRect, Vector3 startWorldPos, Vector3 targetWorldPos)
