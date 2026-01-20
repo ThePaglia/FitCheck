@@ -19,10 +19,10 @@ MonoBehaviour:
     (4 cards) - Use any ability currently on the table.'
   points: 2
   cardImage: {fileID: 2800000, guid: aba401cad2d1fa54dbc393325b9c6632, type: 3}
-  costBlue: 0
-  costRed: 2
-  costGreen: 1
-  costWhite: 0
-  costBlack: 0
+  costDuctTape: 0
+  costGlue: 2
+  costWire: 1
+  costFabric: 0
+  costPlastic: 0
   cardType: 0
   ability: {fileID: 0}

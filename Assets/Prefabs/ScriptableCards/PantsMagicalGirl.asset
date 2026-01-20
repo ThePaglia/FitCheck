@@ -18,10 +18,10 @@ MonoBehaviour:
     else 2 random resources from the bag.\t"
   points: 2
   cardImage: {fileID: 2800000, guid: f7d83bb4947c051488ab382e3ef04fb6, type: 3}
-  costBlue: 0
-  costRed: 0
-  costGreen: 0
-  costWhite: 2
-  costBlack: 1
+  costDuctTape: 0
+  costGlue: 0
+  costWire: 0
+  costFabric: 2
+  costPlastic: 1
   cardType: 3
   ability: {fileID: 0}

@@ -19,10 +19,10 @@ MonoBehaviour:
     any ability.'
   points: 2
   cardImage: {fileID: 2800000, guid: 162022b94cfc9b040b7f44007de3e57a, type: 3}
-  costBlue: 0
-  costRed: 0
-  costGreen: 1
-  costWhite: 0
-  costBlack: 2
+  costDuctTape: 0
+  costGlue: 0
+  costWire: 1
+  costFabric: 0
+  costPlastic: 2
   cardType: 4
   ability: {fileID: 0}

@@ -19,10 +19,10 @@ MonoBehaviour:
     LVL2 (3 cards) - Take a card from another player.'
   points: 2
   cardImage: {fileID: 2800000, guid: 3c15dc8531bd5214392f2f945a4383b1, type: 3}
-  costBlue: 0
-  costRed: 0
-  costGreen: 0
-  costWhite: 1
-  costBlack: 1
+  costDuctTape: 0
+  costGlue: 0
+  costWire: 0
+  costFabric: 1
+  costPlastic: 1
   cardType: 2
   ability: {fileID: 0}

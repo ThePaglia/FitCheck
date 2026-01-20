@@ -20,10 +20,10 @@ MonoBehaviour:
     3 of the new ones.'
   points: 4
   cardImage: {fileID: 2800000, guid: aa59253b027e49448b1601b43d1d7c66, type: 3}
-  costBlue: 0
-  costRed: 0
-  costGreen: 0
-  costWhite: 2
-  costBlack: 2
+  costDuctTape: 0
+  costGlue: 0
+  costWire: 0
+  costFabric: 2
+  costPlastic: 2
   cardType: 3
   ability: {fileID: 0}

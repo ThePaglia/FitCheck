@@ -19,10 +19,10 @@ MonoBehaviour:
     cards) - Steal 2 resources from another player.'
   points: 4
   cardImage: {fileID: 2800000, guid: 06161363fbde7e24295cbed48582bebd, type: 3}
-  costBlue: 1
-  costRed: 1
-  costGreen: 1
-  costWhite: 1
-  costBlack: 1
+  costDuctTape: 1
+  costGlue: 1
+  costWire: 1
+  costFabric: 1
+  costPlastic: 1
   cardType: 3
   ability: {fileID: 0}
