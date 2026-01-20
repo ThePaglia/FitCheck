@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    // TODO: Let the player pick 2 normal tokens for 1 action token but only 1 glitter (joker, counts as every other normal one) one for 1 action token
+    // TODO: Let the player pick 2 normal tokens for 1 action token but only 1 glitter one for 1 action token (joker, counts as every other normal one)
     public bool OnResourceTokenInPlayAreaClicked(ResourceToken token)
     {
         if (!CheckTurnManagerAndCurrentPlayer())
@@ -131,5 +131,21 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    // TODO: Make craft card function
+    public bool OnCardInHandClicked(Card card)
+    {
+        if (!CheckTurnManagerAndCurrentPlayer())
+        {
+            return false;
+        }
+
+        Player currentPlayer = turnManager.GetCurrentPlayer();
+
+        if (!currentPlayer.TryCraftCard(card))
+        {
+            Debug.Log("Cannot craft this card (insufficient resources or not in hand).");
+            return false;
+        }
+
+        return true;
+    }
 }

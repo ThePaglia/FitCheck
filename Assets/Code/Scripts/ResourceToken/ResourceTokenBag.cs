@@ -35,7 +35,7 @@ public class ResourceTokenBag : MonoBehaviour
         CreateTokens(ResourceTokenType.Wire, initialNormalResourceTokenCount);
         CreateTokens(ResourceTokenType.Fabric, initialNormalResourceTokenCount);
         CreateTokens(ResourceTokenType.Plastic, initialNormalResourceTokenCount);
-        
+
         // Create 5 glitter tokens
         CreateTokens(ResourceTokenType.Glitter, initialGlitterResourceTokenCount);
 
@@ -73,6 +73,16 @@ public class ResourceTokenBag : MonoBehaviour
                 GameManager.Instance.OnResourceTokenBagClicked();
             }
         }
+    }
+
+    public void ReturnResourceTokenToBag(ResourceToken resourceToken)
+    {
+        if (resourceToken == null) return;
+
+        resourceToken.gameObject.SetActive(false);
+        resourceToken.transform.SetParent(transform);
+        drawPile.Add(resourceToken);
+        drawPile = Shuffle(drawPile);
     }
 
     public ResourceToken Draw()

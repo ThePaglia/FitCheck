@@ -8,11 +8,11 @@ public class ScriptableCard : ScriptableObject
     [field: SerializeField] public int points;
     [field: SerializeField] public Texture2D cardImage;
 
-    [field: SerializeField] public int costBlue;
-    [field: SerializeField] public int costRed;
-    [field: SerializeField] public int costGreen;
-    [field: SerializeField] public int costWhite;
-    [field: SerializeField] public int costBlack;
+    [field: SerializeField] public int costDuctTape;
+    [field: SerializeField] public int costGlue;
+    [field: SerializeField] public int costWire;
+    [field: SerializeField] public int costFabric;
+    [field: SerializeField] public int costPlastic;
     
     [field: SerializeField] public CardType cardType;
     [field: SerializeField] public Ability ability;

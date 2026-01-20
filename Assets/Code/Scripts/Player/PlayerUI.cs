@@ -21,5 +21,8 @@ public class PlayerUI : MonoBehaviour
         resourceTokenUI.UpdateResourceTokenUI(resourceTokens);
     }
 
-    // TODO: Make in hand cards clickable and craftable if possible
+    public void AnimateCardToCraftedArea(Card card)
+    {
+        handUI.AnimateCardToCraftedArea(card);
+    }
 }

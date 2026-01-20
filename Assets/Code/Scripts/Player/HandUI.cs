@@ -85,6 +85,12 @@ public class HandUI : MonoBehaviour
         cardRect.position = targetWorldPos;
     }
 
+    // TODO: Implement animation from hand to crafting area
+    public void AnimateCardToCraftedArea(Card card)
+    {
+
+    }
+
     private void FanCards(List<Card> hand)
     {
         if (hand.Count == 0) return;
