@@ -166,11 +166,11 @@ public class Player : MonoBehaviour
         if (!CanPayCost(card)) return false;
         if (!SpendCost(card)) return false;
 
-        hand.Remove(card);
         costumesInPlay.Add(card);
+        hand.Remove(card);
+        playerUI.UpdateResourceTokenUI(resourceTokens);
         playerUI.AnimateCardToCraftedArea(card);
         playerUI.UpdateHandUI(hand);
-        playerUI.UpdateResourceTokenUI(resourceTokens);
         return true;
     }
 }

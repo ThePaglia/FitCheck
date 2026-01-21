@@ -5,12 +5,12 @@ public class TurnManager : MonoBehaviour
     private GameManager gm;
     private int currentPlayerIndex = 0;
     private Player currentPlayer;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gm = FindFirstObjectByType<GameManager>();
-        StartTurn();        
+        StartTurn();
     }
 
     public void StartTurn()

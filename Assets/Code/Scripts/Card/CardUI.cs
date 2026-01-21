@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Card))]
 public class CardUI : MonoBehaviour
 {
     private Card card;

@@ -9,9 +9,9 @@ public class ResourceTokenArea : MonoBehaviour
     [SerializeField] private float stackHeight = 0.05f;
     [SerializeField] private int initialResourceTokenCount = 6;
     [SerializeField] private ResourceToken prefabScale;
-    private int columns = System.Enum.GetNames(typeof(ResourceTokenType)).Length;
+    private readonly int columns = System.Enum.GetNames(typeof(ResourceTokenType)).Length;
 
-    private Dictionary<ResourceTokenType, List<ResourceToken>> resourceTokensByType =
+    private readonly Dictionary<ResourceTokenType, List<ResourceToken>> resourceTokensByType =
         new Dictionary<ResourceTokenType, List<ResourceToken>>();
 
     private List<Vector3> colPositions = new List<Vector3>();

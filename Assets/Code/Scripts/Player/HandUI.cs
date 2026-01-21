@@ -1,18 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(RectTransform))]
 public class HandUI : MonoBehaviour
 {
     private RectTransform handContainer;
-    private float cardMoveTime = 0.5f;
-    private float fanAngle = 15f;
-    private float fanRadius = 500f;
+    private readonly float cardMoveTime = 0.5f;
+    private readonly float fanAngle = 15f;
+    private readonly float fanRadius = 500f;
+    private readonly List<RaycastResult> raycastResults = new List<RaycastResult>();
 
     private void Awake()
     {
         handContainer = GetComponent<RectTransform>();
+    }
+
+    private void Update()
+    {
+        if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
+        if (EventSystem.current == null) return;
+
+        PointerEventData pointerData = new PointerEventData(EventSystem.current)
+        {
+            position = Mouse.current.position.ReadValue()
+        };
+
+        raycastResults.Clear();
+        EventSystem.current.RaycastAll(pointerData, raycastResults);
+
+        // Find first card in hand
+        for (int i = 0; i < raycastResults.Count; i++)
+        {
+            Card card = raycastResults[i].gameObject.GetComponent<Card>();
+            if (card != null && IsCardInHand(card))
+            {
+                GameManager.Instance.OnCardInHandClicked(card);
+                return;
+            }
+        }
+    }
+
+    private bool IsCardInHand(Card card)
+    {
+        // Check if card's transform is a child of handContainer
+        return card.transform.IsChildOf(handContainer.transform);
     }
 
     public void UpdateHandUI(List<Card> hand)
@@ -64,7 +99,7 @@ public class HandUI : MonoBehaviour
         Vector3 targetLocalPos = handContainer.position;
 
         // Start animation
-        MoveCardToHand(cardRect, localStartPos, targetLocalPos);
+        MoveCardToHand(cardRect, localStartPos, targetLocalPos); // Doesn't work properly if StartCoroutine is added
     }
 
     private IEnumerator MoveCardToHand(RectTransform cardRect, Vector3 startWorldPos, Vector3 targetWorldPos)

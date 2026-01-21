@@ -10,7 +10,7 @@ public class CardsInPlayArea : MonoBehaviour
     [SerializeField] private int columns = 4;
     [SerializeField] private Card prefabScale;
 
-    private List<Card> cardsInPlay = new List<Card>();
+    private readonly List<Card> cardsInPlay = new List<Card>();
 
     private void Start()
     {
