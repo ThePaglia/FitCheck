@@ -14,10 +14,12 @@ public class Player : MonoBehaviour
     public int resourceTokenLimit = 6;
 
     private PlayerUI playerUI;
+    private CraftedCardArea craftedCardArea;
 
     private void Awake()
     {
         playerUI = GetComponent<PlayerUI>();
+        craftedCardArea = GetComponentInChildren<CraftedCardArea>();
     }
 
     public bool HasAvailableAction()
@@ -166,11 +168,12 @@ public class Player : MonoBehaviour
         if (!CanPayCost(card)) return false;
         if (!SpendCost(card)) return false;
 
-        costumesInPlay.Add(card);
         hand.Remove(card);
+        craftedCardArea.PlaceCraftedCard(card);
+        costumesInPlay.Add(card);
         playerUI.UpdateResourceTokenUI(resourceTokens);
-        playerUI.AnimateCardToCraftedArea(card);
         playerUI.UpdateHandUI(hand);
+
         return true;
     }
 }

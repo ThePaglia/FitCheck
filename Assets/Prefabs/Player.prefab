@@ -723,6 +723,53 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2005253409510513393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4931513066297456086}
+  - component: {fileID: 8090065210788848332}
+  m_Layer: 0
+  m_Name: CraftedCardArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4931513066297456086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005253409510513393}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.08, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5363528900359618006}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8090065210788848332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005253409510513393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39e7f1b9527b4b44c92fba37070a0baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftedCardArea
+  cardSpacing: 0.3
+  startPosition: {x: 0, y: 0, z: 0}
+  prefabScale: {fileID: 1392477151726718133, guid: f47667dc003888542b4bc1ef952db538, type: 3}
 --- !u!1 &2662514493729500390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,6 +1258,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4931513066297456086}
   - {fileID: 7132617825225900736}
   - {fileID: 7701535464253054325}
   - {fileID: 7240497355917190053}
@@ -1249,7 +1297,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUI
   handUI: {fileID: 4611612932772558755}
-  resourceTokenUI: {fileID: 0}
+  resourceTokenUI: {fileID: 719662221205441028}
+  craftedCardArea: {fileID: 8090065210788848332}
 --- !u!1 &5211807759248431227
 GameObject:
   m_ObjectHideFlags: 0

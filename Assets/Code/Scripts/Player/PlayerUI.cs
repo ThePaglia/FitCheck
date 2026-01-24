@@ -6,6 +6,7 @@ public class PlayerUI : MonoBehaviour
 {
     public HandUI handUI;
     public ResourceTokenUI resourceTokenUI;
+    public CraftedCardArea craftedCardArea;
 
     public void UpdateHandUI(List<Card> hand)
     {
@@ -19,10 +20,5 @@ public class PlayerUI : MonoBehaviour
     public void UpdateResourceTokenUI(List<ResourceToken> resourceTokens)
     {
         resourceTokenUI.UpdateResourceTokenUI(resourceTokens);
-    }
-
-    public void AnimateCardToCraftedArea(Card card)
-    {
-        handUI.AnimateCardToCraftedArea(card);
     }
 }

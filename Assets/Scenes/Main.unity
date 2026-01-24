@@ -523,63 +523,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1001 &426720408
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133414585982440099, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7755546778719138953, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
-      propertyPath: m_Name
-      value: CraftedCardArea
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9f2772a27befeef4bb5142a01384407d, type: 3}
 --- !u!114 &769666806 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 719662221205441028, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
@@ -869,6 +812,10 @@ PrefabInstance:
     - target: {fileID: 4793939934483672006, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4931513066297456086, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4962812957961138811, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1161,6 +1108,18 @@ PrefabInstance:
     - target: {fileID: 9058056781213256857, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132649327174246337, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132649327174246337, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132649327174246337, guid: 5572bb644cc9c9244b192bf668c09a3f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1685,4 +1644,3 @@ SceneRoots:
   - {fileID: 6639877489429591712}
   - {fileID: 2029104167}
   - {fileID: 1706751314}
-  - {fileID: 426720408}

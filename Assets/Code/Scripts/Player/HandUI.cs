@@ -57,6 +57,8 @@ public class HandUI : MonoBehaviour
 
     public void AnimateCardToHand(Card card)
     {
+        if (card == null) return;
+
         RectTransform cardRect = card.GetComponent<RectTransform>();
         if (cardRect == null) return;
 
@@ -118,12 +120,6 @@ public class HandUI : MonoBehaviour
         }
 
         cardRect.position = targetWorldPos;
-    }
-
-    // TODO: Implement animation from hand to crafting area
-    public void AnimateCardToCraftedArea(Card card)
-    {
-
     }
 
     private void FanCards(List<Card> hand)

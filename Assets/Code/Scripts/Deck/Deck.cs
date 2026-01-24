@@ -94,6 +94,37 @@ public class Deck : MonoBehaviour
         return drawnCard;
     }
 
+    public void ReturnCardToDeck(Card card)
+    {
+        if (card == null) return;
+
+        card.gameObject.SetActive(false);
+        card.transform.SetParent(transform);
+        drawPile.Add(card);
+
+        EnlargeDeck();
+
+        drawPile = Shuffle(drawPile);
+    }
+
+    private void EnlargeDeck()
+    {
+        Vector3 currentScale = transform.localScale;
+        Vector3 currentPosition = transform.position;
+
+        currentScale.y += heightDecreasePerCard;
+        if (currentScale.y >= minHeightBeforeInvisible)
+        {
+            meshRenderer.enabled = true;
+
+            // Adjust position to keep the deck grounded
+            currentPosition.y += heightDecreasePerCard / 2;
+
+            transform.localScale = currentScale;
+            transform.position = currentPosition;
+        }
+    }
+
     private void ShrinkDeck()
     {
         Vector3 currentScale = transform.localScale;

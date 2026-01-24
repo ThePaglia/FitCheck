@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class CardsInPlayArea : MonoBehaviour
 {
+    public static CardsInPlayArea Instance { get; private set; }
+
     [SerializeField] private float columnSpacing = 0.23f;
     [SerializeField] private float rowSpacing = 0.3f;
     [SerializeField] private int initialCardCount = 4;
@@ -11,6 +13,19 @@ public class CardsInPlayArea : MonoBehaviour
     [SerializeField] private Card prefabScale;
 
     private readonly List<Card> cardsInPlay = new List<Card>();
+
+    void Awake()
+    {
+        // Typical singleton declaration
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -32,7 +47,7 @@ public class CardsInPlayArea : MonoBehaviour
         }
     }
 
-    private void PlaceCard(Card card, int i)
+    public void PlaceCard(Card card, int i)
     {
         int col = i % columns;
         int row = i / columns;
@@ -49,8 +64,7 @@ public class CardsInPlayArea : MonoBehaviour
         Vector3 pos = transform.position + new Vector3(col * columnSpacing + offsetX, 0.1f, row * rowSpacing + offsetZ);
 
         card.transform.SetParent(transform);
-        card.transform.position = pos;
-        card.transform.rotation = Quaternion.Euler(90f, 180f, 0f);
+        card.transform.SetPositionAndRotation(pos, Quaternion.Euler(90f, 180f, 0f));
         card.transform.localScale = prefabScale.transform.localScale;
         card.gameObject.SetActive(true);
     }
