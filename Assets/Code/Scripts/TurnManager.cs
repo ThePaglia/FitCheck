@@ -2,20 +2,18 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    private GameManager gm;
     private int currentPlayerIndex = 0;
     private Player currentPlayer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gm = FindFirstObjectByType<GameManager>();
         StartTurn();
     }
 
     public void StartTurn()
     {
-        currentPlayer = gm.players[currentPlayerIndex];
+        currentPlayer = GameManager.Instance.players[currentPlayerIndex];
         currentPlayer.RefreshActionTokens();
 
         Debug.Log($"Player {currentPlayerIndex + 1}'s turn started.");
@@ -25,7 +23,7 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log($"Player {currentPlayerIndex + 1}'s turn ended.");
 
-        currentPlayerIndex = (currentPlayerIndex + 1) % gm.players.Count;
+        currentPlayerIndex = (currentPlayerIndex + 1) % GameManager.Instance.players.Count;
         StartTurn();
     }
 
