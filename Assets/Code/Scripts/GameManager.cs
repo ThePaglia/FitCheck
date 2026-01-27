@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public List<Player> players;
     public TurnManager turnManager;
+    private Camera mainCamera;
 
     private void Awake()
     {
@@ -16,6 +17,17 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void SwitchCameraToPlayer(int playerIndex)
+    {
+        if (playerIndex < 0 || playerIndex >= players.Count) return;
+
+        Player targetPlayer = players[playerIndex];
+        if (mainCamera != null && targetPlayer.cameraPosition != null)
+        {
+            mainCamera.transform.SetPositionAndRotation(targetPlayer.cameraPosition.position, targetPlayer.cameraPosition.rotation);
         }
     }
 

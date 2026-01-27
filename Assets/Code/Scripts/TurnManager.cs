@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TurnManager : MonoBehaviour
 {
@@ -11,12 +12,22 @@ public class TurnManager : MonoBehaviour
         StartTurn();
     }
 
+    private void Update()
+    {
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            EndTurn();
+        }
+    }
+
     public void StartTurn()
     {
         currentPlayer = GameManager.Instance.players[currentPlayerIndex];
         currentPlayer.RefreshActionTokens();
 
-        Debug.Log($"Player {currentPlayerIndex + 1}'s turn started.");
+        GameManager.Instance.SwitchCameraToPlayer(currentPlayerIndex);
+
+        Debug.Log($"Player {currentPlayerIndex + 1}'s turn started. Press Space to end turn.");
     }
 
     public void EndTurn()

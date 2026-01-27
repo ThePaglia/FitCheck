@@ -49,4 +49,3 @@ MonoBehaviour:
   initialCardCount: 4
   columns: 4
   prefabScale: {fileID: 1392477151726718133, guid: f47667dc003888542b4bc1ef952db538, type: 3}
-  cardsInPlay: []

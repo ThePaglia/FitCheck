@@ -6,7 +6,7 @@ using static ResourceToken;
 
 public class Player : MonoBehaviour
 {
-    // TODO: Add multiplayer, idk probably 4 player and a button with end turn and camera switch to another player
+    public Transform cameraPosition;
     public List<ActionToken> actionTokens = new List<ActionToken>(2);
     public List<ResourceToken> resourceTokens = new List<ResourceToken>();
     public List<Card> hand = new List<Card>();
