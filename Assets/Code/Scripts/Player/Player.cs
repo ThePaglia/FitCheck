@@ -6,6 +6,7 @@ using static ResourceToken;
 
 public class Player : MonoBehaviour
 {
+    // TODO: Fix players' cameras and cardsinplayarea in unity editor
     public Transform cameraPosition;
     public List<ActionToken> actionTokens = new List<ActionToken>(2);
     public List<ResourceToken> resourceTokens = new List<ResourceToken>();

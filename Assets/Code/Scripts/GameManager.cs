@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public List<Player> players;
     public TurnManager turnManager;
-    private Camera mainCamera;
+    [SerializeField] private Camera mainCamera;
 
     private void Awake()
     {
@@ -47,6 +47,11 @@ public class GameManager : MonoBehaviour
             return false;
         }
 
+        return true;
+    }
+
+    private bool CheckActionToken()
+    {
         if (!turnManager.CanCurrentPlayerAct())
         {
             Debug.Log("No available action tokens for current player.");
@@ -58,6 +63,11 @@ public class GameManager : MonoBehaviour
     public bool OnDeckClicked()
     {
         if (!CheckTurnManagerAndCurrentPlayer())
+        {
+            return false;
+        }
+
+        if (!CheckActionToken())
         {
             return false;
         }
@@ -84,6 +94,11 @@ public class GameManager : MonoBehaviour
             return false;
         }
 
+        if (!CheckActionToken())
+        {
+            return false;
+        }
+
         Player currentPlayer = turnManager.GetCurrentPlayer();
         if (currentPlayer.hand.Count >= currentPlayer.handLimit)
         {
@@ -99,6 +114,11 @@ public class GameManager : MonoBehaviour
     public bool OnResourceTokenBagClicked()
     {
         if (!CheckTurnManagerAndCurrentPlayer())
+        {
+            return false;
+        }
+
+        if (!CheckActionToken())
         {
             return false;
         }
@@ -127,6 +147,11 @@ public class GameManager : MonoBehaviour
     public bool OnResourceTokenInPlayAreaClicked(ResourceToken token)
     {
         if (!CheckTurnManagerAndCurrentPlayer())
+        {
+            return false;
+        }
+
+        if (!CheckActionToken())
         {
             return false;
         }

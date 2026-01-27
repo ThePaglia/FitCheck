@@ -36,7 +36,7 @@ public class ResourceTokenArea : MonoBehaviour
 
         for (int i = 0; i < columns; i++)
         {
-            Vector3 columnPos = transform.position + new Vector3(startX + (i * spacing), 0f, 0f);
+            Vector3 columnPos = new Vector3(startX + (i * spacing), 0f, 0f);
             colPositions.Add(columnPos);
         }
     }
@@ -69,7 +69,7 @@ public class ResourceTokenArea : MonoBehaviour
         Vector3 stackPos = columnPos + new Vector3(0f, stackCount * stackHeight, 0f);
 
         resourceToken.transform.SetParent(transform);
-        resourceToken.transform.position = stackPos;
+        resourceToken.transform.localPosition = stackPos;
         resourceToken.transform.localScale = prefabScale.transform.localScale;
         resourceToken.gameObject.SetActive(true);
     }
@@ -128,7 +128,7 @@ public class ResourceTokenArea : MonoBehaviour
         for (int i = 0; i < resourceTokensByType[tokenType].Count; i++)
         {
             Vector3 stackPos = columnPos + new Vector3(0f, i * stackHeight, 0f);
-            resourceTokensByType[tokenType][i].transform.position = stackPos;
+            resourceTokensByType[tokenType][i].transform.localPosition = stackPos;
         }
     }
 }

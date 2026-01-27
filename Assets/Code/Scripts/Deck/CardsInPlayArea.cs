@@ -59,12 +59,12 @@ public class CardsInPlayArea : MonoBehaviour
 
         // Center offset
         float offsetX = -gridWidth / 2f;
-        float offsetZ = -gridHeight;
+        float offsetZ = -gridHeight / 2f;
 
-        Vector3 pos = transform.position + new Vector3(col * columnSpacing + offsetX, 0.1f, row * rowSpacing + offsetZ);
+        Vector3 pos = new Vector3(col * columnSpacing + offsetX, 0.1f, row * rowSpacing + offsetZ);
 
         card.transform.SetParent(transform);
-        card.transform.SetPositionAndRotation(pos, Quaternion.Euler(90f, 180f, 0f));
+        card.transform.SetLocalPositionAndRotation(pos, Quaternion.Euler(90f, 180f, 0f));
         card.transform.localScale = prefabScale.transform.localScale;
         card.gameObject.SetActive(true);
     }
