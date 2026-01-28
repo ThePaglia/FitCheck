@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // TODO: Refactor every public variable with get set c#
     public static GameManager Instance { get; private set; }
     public List<Player> players;
     public TurnManager turnManager;
@@ -73,7 +74,7 @@ public class GameManager : MonoBehaviour
         }
 
         Player currentPlayer = turnManager.GetCurrentPlayer();
-        if (currentPlayer.hand.Count >= currentPlayer.handLimit)
+        if (currentPlayer.hand.Count >= currentPlayer.HandLimit)
         {
             Debug.Log("Hand limit reached. Cannot draw more cards.");
             return false;
@@ -100,7 +101,7 @@ public class GameManager : MonoBehaviour
         }
 
         Player currentPlayer = turnManager.GetCurrentPlayer();
-        if (currentPlayer.hand.Count >= currentPlayer.handLimit)
+        if (currentPlayer.hand.Count >= currentPlayer.HandLimit)
         {
             Debug.Log("Hand limit reached. Cannot draw more cards.");
             return false;
@@ -124,7 +125,7 @@ public class GameManager : MonoBehaviour
         }
 
         Player currentPlayer = turnManager.GetCurrentPlayer();
-        if (currentPlayer.resourceTokens.Count >= currentPlayer.resourceTokenLimit)
+        if (currentPlayer.resourceTokens.Count >= currentPlayer.ResourceTokenLimit)
         {
             Debug.Log("Resource token limit reached. Cannot draw more tokens.");
             return false;
@@ -157,7 +158,7 @@ public class GameManager : MonoBehaviour
         }
 
         Player currentPlayer = turnManager.GetCurrentPlayer();
-        if (currentPlayer.resourceTokens.Count >= currentPlayer.resourceTokenLimit)
+        if (currentPlayer.resourceTokens.Count >= currentPlayer.ResourceTokenLimit)
         {
             Debug.Log("Resource token limit reached. Cannot draw more tokens.");
             return false;
@@ -185,4 +186,41 @@ public class GameManager : MonoBehaviour
 
         return true;
     }
+
+    public bool CheckGameOver()
+    {
+        foreach (Player player in players)
+        {
+            if (player.CraftedCardArea.GetCraftedCardCount() >= 5)
+            {
+                Debug.Log("Game over");
+                GetWinner();
+                // TODO: Win screen UI
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void GetWinner()
+    {
+        // Find player with highest score
+        Player winner = players[0];
+        int highestScore = winner.CraftedCardArea.GetTotalCraftedCardPoints();
+
+        for (int i = 1; i < players.Count; i++)
+        {
+            int playerScore = players[i].CraftedCardArea.GetTotalCraftedCardPoints();
+            if (playerScore > highestScore)
+            {
+                winner = players[i];
+                highestScore = playerScore;
+            }
+        }
+
+        int winnerIndex = players.IndexOf(winner);
+        Debug.Log($"Player {winnerIndex + 1} wins with {highestScore} points!");
+
+    }
+
 }

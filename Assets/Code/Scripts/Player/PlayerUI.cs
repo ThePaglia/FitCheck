@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Fix overlapping players' UI
 // TODO: Consider refactoring the UI into a World Space UI
 public class PlayerUI : MonoBehaviour
 {

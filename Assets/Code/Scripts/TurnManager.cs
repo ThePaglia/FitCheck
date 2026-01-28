@@ -34,6 +34,12 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log($"Player {currentPlayerIndex + 1}'s turn ended.");
 
+        if (GameManager.Instance.CheckGameOver())
+        {
+            Debug.Log("Game ended");
+            return;
+        }
+
         currentPlayerIndex = (currentPlayerIndex + 1) % GameManager.Instance.players.Count;
         StartTurn();
     }

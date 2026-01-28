@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class ActionToken : MonoBehaviour
 {
-    public bool isAvailable = true;
+    public bool IsAvailable { get; private set; } = true;
 
     public void Consume()
     {
-        isAvailable = false;
+        IsAvailable = false;
     }
 
     public void Refresh()
     {
-        isAvailable = true;
+        IsAvailable = true;
     }
 }

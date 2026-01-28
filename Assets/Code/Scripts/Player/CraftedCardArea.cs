@@ -5,7 +5,6 @@ using static ScriptableCard;
 
 public class CraftedCardArea : MonoBehaviour
 {
-    // TODO: There should be max 5 cards in a ordered line (mask, arms, torso, legs, shoes)
     [SerializeField] private float cardSpacing = 0.3f;
     [SerializeField] private Vector3 startPosition;
     [SerializeField] private Card prefabScale;
@@ -66,5 +65,28 @@ public class CraftedCardArea : MonoBehaviour
         card.transform.SetPositionAndRotation(position, Quaternion.Euler(90f, 180f, 0f));
         card.transform.localScale = prefabScale.transform.localScale;
         card.gameObject.SetActive(true);
+    }
+
+    public int GetCraftedCardCount()
+    {
+        int count = 0;
+        foreach (Card card in craftedCards.Values)
+        {
+            if (card != null) count++;
+        }
+        return count;
+    }
+
+    public int GetTotalCraftedCardPoints()
+    {
+        int totalPoints = 0;
+        foreach (Card card in craftedCards.Values)
+        {
+            if (card != null && card.CardData != null)
+            {
+                totalPoints += card.CardData.points;
+            }
+        }
+        return totalPoints;
     }
 }

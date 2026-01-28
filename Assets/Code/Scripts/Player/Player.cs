@@ -11,27 +11,26 @@ public class Player : MonoBehaviour
     public List<ActionToken> actionTokens = new List<ActionToken>(2);
     public List<ResourceToken> resourceTokens = new List<ResourceToken>();
     public List<Card> hand = new List<Card>();
-    public List<Card> costumesInPlay = new List<Card>();
-    public int handLimit = 3;
-    public int resourceTokenLimit = 6;
+    public int HandLimit { get; private set; } = 3;
+    public int ResourceTokenLimit { get; private set; } = 6;
+    public CraftedCardArea CraftedCardArea { get; set; }
 
-    private PlayerUI playerUI;
-    private CraftedCardArea craftedCardArea;
+    public PlayerUI playerUI;
 
     private void Awake()
     {
         playerUI = GetComponent<PlayerUI>();
-        craftedCardArea = GetComponentInChildren<CraftedCardArea>();
+        CraftedCardArea = GetComponentInChildren<CraftedCardArea>();
     }
 
     public bool HasAvailableAction()
     {
-        return actionTokens.Any(token => token.isAvailable);
+        return actionTokens.Any(token => token.IsAvailable);
     }
 
     public void UseActionToken()
     {
-        var availableToken = actionTokens.FirstOrDefault(token => token.isAvailable);
+        var availableToken = actionTokens.FirstOrDefault(token => token.IsAvailable);
         if (availableToken != null)
         {
             availableToken.Consume();
@@ -171,8 +170,7 @@ public class Player : MonoBehaviour
         if (!SpendCost(card)) return false;
 
         hand.Remove(card);
-        craftedCardArea.PlaceCraftedCard(card);
-        costumesInPlay.Add(card);
+        CraftedCardArea.PlaceCraftedCard(card);
         playerUI.UpdateResourceTokenUI(resourceTokens);
         playerUI.UpdateHandUI(hand);
 
