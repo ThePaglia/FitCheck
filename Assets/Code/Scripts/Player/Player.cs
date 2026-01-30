@@ -6,7 +6,6 @@ using static ResourceToken;
 
 public class Player : MonoBehaviour
 {
-    // TODO: Fix players' cameras and cardsinplayarea in unity editor
     public Transform cameraPosition;
     public List<ActionToken> actionTokens = new List<ActionToken>(2);
     public List<ResourceToken> resourceTokens = new List<ResourceToken>();
@@ -166,8 +165,8 @@ public class Player : MonoBehaviour
     {
         if (card == null) return false;
         if (!hand.Contains(card)) return false;
-        if (!CanPayCost(card)) return false;
-        if (!SpendCost(card)) return false;
+        // if (!CanPayCost(card)) return false;
+        // if (!SpendCost(card)) return false;
 
         hand.Remove(card);
         CraftedCardArea.PlaceCraftedCard(card);

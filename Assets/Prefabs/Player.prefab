@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee2a30b40159b1468c29c29f766d4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActionToken
-  isAvailable: 1
 --- !u!1 &445399761204345974
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,7 +767,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CraftedCardArea
   cardSpacing: 0.3
-  startPosition: {x: 0, y: 0, z: 0}
   prefabScale: {fileID: 1392477151726718133, guid: f47667dc003888542b4bc1ef952db538, type: 3}
 --- !u!1 &2662514493729500390
 GameObject:
@@ -1283,9 +1281,7 @@ MonoBehaviour:
   - {fileID: 1280703948986605903}
   resourceTokens: []
   hand: []
-  costumesInPlay: []
-  handLimit: 3
-  resourceTokenLimit: 6
+  playerUI: {fileID: 733763471271395830}
 --- !u!114 &733763471271395830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1800,7 +1796,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee2a30b40159b1468c29c29f766d4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActionToken
-  isAvailable: 1
 --- !u!1 &6485759455358108243
 GameObject:
   m_ObjectHideFlags: 0

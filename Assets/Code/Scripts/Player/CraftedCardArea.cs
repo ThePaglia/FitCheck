@@ -6,7 +6,6 @@ using static ScriptableCard;
 public class CraftedCardArea : MonoBehaviour
 {
     [SerializeField] private float cardSpacing = 0.3f;
-    [SerializeField] private Vector3 startPosition;
     [SerializeField] private Card prefabScale;
     private readonly int columns = System.Enum.GetValues(typeof(CardType)).Length;
 
@@ -18,12 +17,6 @@ public class CraftedCardArea : MonoBehaviour
         foreach (CardType type in System.Enum.GetValues(typeof(CardType)))
         {
             craftedCards[type] = null;
-        }
-
-        // Set default start position if not configured
-        if (startPosition == Vector3.zero)
-        {
-            startPosition = transform.position;
         }
     }
 
@@ -58,11 +51,11 @@ public class CraftedCardArea : MonoBehaviour
         float gridWidth = (columns - 1) * cardSpacing;
         float offsetX = -gridWidth / 2f;
 
-        Vector3 position = startPosition + new Vector3(slotIndex * cardSpacing + offsetX, 0.1f, 0f);
+        Vector3 position = new Vector3(slotIndex * cardSpacing + offsetX, 0.1f, 0f);
 
         // Position and orient the card
         card.transform.SetParent(transform);
-        card.transform.SetPositionAndRotation(position, Quaternion.Euler(90f, 180f, 0f));
+        card.transform.SetLocalPositionAndRotation(position, Quaternion.Euler(90f, 180f, 0f));
         card.transform.localScale = prefabScale.transform.localScale;
         card.gameObject.SetActive(true);
     }
