@@ -27,6 +27,10 @@ public class TurnManager : MonoBehaviour
 
         GameManager.Instance.SwitchCameraToPlayer(currentPlayerIndex);
 
+        currentPlayer.PlayerUI.ClearHand();
+        currentPlayer.PlayerUI.UpdateHandUI(currentPlayer.hand);
+        currentPlayer.PlayerUI.UpdateResourceTokenUI(currentPlayer.resourceTokens);
+
         Debug.Log($"Player {currentPlayerIndex + 1}'s turn started. Press Space to end turn.");
     }
 

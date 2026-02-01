@@ -13,12 +13,11 @@ public class Player : MonoBehaviour
     public int HandLimit { get; private set; } = 3;
     public int ResourceTokenLimit { get; private set; } = 6;
     public CraftedCardArea CraftedCardArea { get; set; }
-
-    public PlayerUI playerUI;
+    public PlayerUI PlayerUI { get; private set; }
 
     private void Awake()
     {
-        playerUI = GetComponent<PlayerUI>();
+        PlayerUI = PlayerUI.Instance;
         CraftedCardArea = GetComponentInChildren<CraftedCardArea>();
     }
 
@@ -53,8 +52,8 @@ public class Player : MonoBehaviour
         if (card != null)
         {
             hand.Add(card);
-            playerUI.AnimateCardToHand(card);
-            playerUI.UpdateHandUI(hand);
+            PlayerUI.AnimateCardToHand(card);
+            PlayerUI.UpdateHandUI(hand);
         }
     }
 
@@ -63,7 +62,7 @@ public class Player : MonoBehaviour
         if (resourceToken != null)
         {
             resourceTokens.Add(resourceToken);
-            playerUI.UpdateResourceTokenUI(resourceTokens);
+            PlayerUI.UpdateResourceTokenUI(resourceTokens);
         }
     }
 
@@ -165,13 +164,13 @@ public class Player : MonoBehaviour
     {
         if (card == null) return false;
         if (!hand.Contains(card)) return false;
-        // if (!CanPayCost(card)) return false;
-        // if (!SpendCost(card)) return false;
+        if (!CanPayCost(card)) return false;
+        if (!SpendCost(card)) return false;
 
         hand.Remove(card);
         CraftedCardArea.PlaceCraftedCard(card);
-        playerUI.UpdateResourceTokenUI(resourceTokens);
-        playerUI.UpdateHandUI(hand);
+        PlayerUI.UpdateResourceTokenUI(resourceTokens);
+        PlayerUI.UpdateHandUI(hand);
 
         return true;
     }

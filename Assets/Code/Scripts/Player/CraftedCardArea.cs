@@ -5,6 +5,7 @@ using static ScriptableCard;
 
 public class CraftedCardArea : MonoBehaviour
 {
+    // TODO: Try to fix fast crafting card bug
     [SerializeField] private float cardSpacing = 0.3f;
     [SerializeField] private Card prefabScale;
     private readonly int columns = System.Enum.GetValues(typeof(CardType)).Length;

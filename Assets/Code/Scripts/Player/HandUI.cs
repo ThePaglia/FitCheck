@@ -50,11 +50,6 @@ public class HandUI : MonoBehaviour
         return card.transform.IsChildOf(handContainer.transform);
     }
 
-    public void UpdateHandUI(List<Card> hand)
-    {
-        FanCards(hand);
-    }
-
     public void AnimateCardToHand(Card card)
     {
         if (card == null) return;
@@ -122,9 +117,27 @@ public class HandUI : MonoBehaviour
         cardRect.position = targetWorldPos;
     }
 
+    public void UpdateHandUI(List<Card> hand)
+    {
+        FanCards(hand);
+    }
+
+    public void ClearHand()
+    {
+        foreach (Transform child in handContainer)
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
     private void FanCards(List<Card> hand)
     {
         if (hand.Count == 0) return;
+
+        foreach (Card card in hand)
+        {
+            card.gameObject.SetActive(true);
+        }
 
         int cardCount = hand.Count;
         float totalAngle = fanAngle * (cardCount - 1);
