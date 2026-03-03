@@ -98,30 +98,29 @@ public class ResourceTokenUI : MonoBehaviour
 
     public void UpdateResourceTokenUI(List<ResourceToken> resourceTokens)
     {
-        // First, ensure all tokens are properly set up for UI
-        foreach (ResourceToken resourceToken in resourceTokens)
-        {
-            HideTokenForUI(resourceToken);
-        }
+        HideTokensForUI(resourceTokens);
         AssignTokensCount(resourceTokens);
     }
 
-    private void HideTokenForUI(ResourceToken resourceToken)
+    private void HideTokensForUI(List<ResourceToken> resourceTokens)
     {
-        if (processedTokens.Contains(resourceToken)) return;
-
-        // Disable 3D rendering
-        if (resourceToken.TryGetComponent<MeshRenderer>(out var meshRenderer)) meshRenderer.enabled = false;
-
-        // Disable collider
-        if (resourceToken.TryGetComponent<Collider>(out var collider)) collider.enabled = false;
-
-        // Reparent to resource token container (Canvas)
-        if (resourceToken.TryGetComponent<RectTransform>(out var tokenRect))
+        foreach (ResourceToken resourceToken in resourceTokens)
         {
-            tokenRect.SetParent(resourceTokenContainer);
+            if (processedTokens.Contains(resourceToken)) return;
+
+            // Disable 3D rendering
+            if (resourceToken.TryGetComponent<MeshRenderer>(out var meshRenderer)) meshRenderer.enabled = false;
+
+            // Disable collider
+            if (resourceToken.TryGetComponent<Collider>(out var collider)) collider.enabled = false;
+
+            // Reparent to resource token container (Canvas)
+            if (resourceToken.TryGetComponent<RectTransform>(out var tokenRect))
+            {
+                tokenRect.SetParent(resourceTokenContainer);
+            }
+            processedTokens.Add(resourceToken);
         }
-        processedTokens.Add(resourceToken);
     }
 
     private void AssignTokensCount(List<ResourceToken> resourceTokens)
