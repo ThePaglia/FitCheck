@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,10 @@ public class ResourceTokenUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI fabricText;
     [SerializeField] private TextMeshProUGUI plasticText;
     [SerializeField] private TextMeshProUGUI glitterText;
+
+    [Header("Pulse Settings")]
+    [SerializeField] private float pulseScale = 1.2f;
+    [SerializeField] private float pulseSpeed = 0.2f;
 
     private readonly List<ResourceToken> processedTokens = new List<ResourceToken>();
 
@@ -102,11 +107,12 @@ public class ResourceTokenUI : MonoBehaviour
         AssignTokensCount(resourceTokens);
     }
 
+    // TODO:Understand if it takes the copy or the original token, sometimes it doesn't disappear from the world when picked up
     private void HideTokensForUI(List<ResourceToken> resourceTokens)
     {
         foreach (ResourceToken resourceToken in resourceTokens)
         {
-            if (processedTokens.Contains(resourceToken)) return;
+            if (processedTokens.Contains(resourceToken)) continue;
 
             // Disable 3D rendering
             if (resourceToken.TryGetComponent<MeshRenderer>(out var meshRenderer)) meshRenderer.enabled = false;
@@ -138,7 +144,32 @@ public class ResourceTokenUI : MonoBehaviour
         foreach (var (tokenType, textComponent) in tokenCounts)
         {
             int count = resourceTokens.Count(t => t.resourceTokenType == tokenType);
-            textComponent.text = count.ToString();
+            string newValue = count.ToString();
+            
+            // Pulse effect if count changed
+            if (textComponent.text != newValue)
+            {
+                textComponent.text = newValue;
+                TokenPulseEffect(textComponent);
+            }
         }
+    }
+
+    private void TokenPulseEffect(TextMeshProUGUI textComponent)
+    {
+        if (textComponent == null) return;
+
+        Transform target = textComponent.transform;
+
+        // Stop any existing tween on this target
+        target.DOKill();
+
+        // Ensure consistent baseline
+        target.localScale = Vector3.one;
+
+        // Pulse once (up then back)
+        target.DOScale(Vector3.one * pulseScale, pulseSpeed)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(2, LoopType.Yoyo);
     }
 }
