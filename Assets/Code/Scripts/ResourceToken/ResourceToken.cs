@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class ResourceToken : MonoBehaviour
 {
-    public static readonly Color Grey = Color.grey;
-    public static readonly Color Blue = Color.blue;
-    public static readonly Color Copper = new Color(184f / 255f, 115f / 255f, 51f / 255f);
-    public static readonly Color Green = Color.green;
-    public static readonly Color Red = Color.red;
+    public static Color Red = Color.red;
+    public static Color Pink = Color.hotPink;
+    public static Color Blue = Color.blue;
+    public static Color Grey = Color.grey;
+    public static Color Black = Color.black;
 
-    public static readonly Color GlitterColor;
+    public static Color GlitterColor;
 
     public enum ResourceTokenType
     {
@@ -32,11 +32,11 @@ public class ResourceToken : MonoBehaviour
     {
         return type switch
         {
-            ResourceTokenType.DuctTape => new Color(Grey.r, Grey.g, Grey.b),
-            ResourceTokenType.Glue => new Color(Blue.r, Blue.g, Blue.b),
-            ResourceTokenType.Wire => new Color(Copper.r, Copper.g, Copper.b),
-            ResourceTokenType.Fabric => new Color(Green.r, Green.g, Green.b),
-            ResourceTokenType.Plastic => new Color(Red.r, Red.g, Red.b),
+            ResourceTokenType.DuctTape => Red,
+            ResourceTokenType.Glue => Pink,
+            ResourceTokenType.Wire => Blue,
+            ResourceTokenType.Fabric => Grey,
+            ResourceTokenType.Plastic => Black,
             ResourceTokenType.Glitter => GlitterColor,
             _ => Color.magenta,
         };

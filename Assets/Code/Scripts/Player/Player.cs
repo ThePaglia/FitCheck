@@ -98,7 +98,6 @@ public class Player : MonoBehaviour
             && CoverCost(needPlastic, havePlastic, ref glitter);
     }
 
-    // TODO: Do more testing
     private bool SpendCost(Card card)
     {
         int needDuct = card.CardData.costDuctTape;
