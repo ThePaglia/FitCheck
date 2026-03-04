@@ -107,7 +107,6 @@ public class ResourceTokenUI : MonoBehaviour
         AssignTokensCount(resourceTokens);
     }
 
-    // TODO:Understand if it takes the copy or the original token, sometimes it doesn't disappear from the world when picked up
     private void HideTokensForUI(List<ResourceToken> resourceTokens)
     {
         foreach (ResourceToken resourceToken in resourceTokens)
