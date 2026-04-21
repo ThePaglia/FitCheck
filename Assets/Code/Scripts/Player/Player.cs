@@ -66,97 +66,91 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Check if we can cover the cost with available tokens and wildcards
+    private bool CoverCost(int cost, int available, ref int wild)
+    {
+        int missing = Mathf.Max(0, cost - available);
+        if (missing > wild) return false;
+        wild -= missing;
+        return true;
+    }
+
     private bool CanPayCost(Card card)
     {
-        // Map costs to token types (adjust mapping if your costs differ)
-        int needDuct = card.CardData.costDuctTape;
-        int needGlue = card.CardData.costGlue;
-        int needWire = card.CardData.costWire;
-        int needFabric = card.CardData.costFabric;
-        int needPlastic = card.CardData.costPlastic;
+        List<(int cost, int available)> tokenCosts = new List<(int cost, int available)>
+        {
+            (card.CardData.costDuctTape, resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.DuctTape)),
+            (card.CardData.costGlue, resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Glue)),
+            (card.CardData.costWire, resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Wire)),
+            (card.CardData.costFabric, resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Fabric)),
+            (card.CardData.costPlastic, resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Plastic))
+        };
 
-        int haveDuct = resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.DuctTape);
-        int haveGlue = resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Glue);
-        int haveWire = resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Wire);
-        int haveFabric = resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Fabric);
-        int havePlastic = resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Plastic);
         int glitter = resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Glitter);
 
-        // Helper function to check if we can cover the cost with available tokens and wildcards
-        static bool CoverCost(int need, int have, ref int wild)
-        {
-            int missing = Mathf.Max(0, need - have);
-            if (missing > wild) return false;
-            wild -= missing;
-            return true;
-        }
+        return tokenCosts.All(token => CoverCost(token.cost, token.available, ref glitter));
+    }
 
-        return CoverCost(needDuct, haveDuct, ref glitter)
-            && CoverCost(needGlue, haveGlue, ref glitter)
-            && CoverCost(needWire, haveWire, ref glitter)
-            && CoverCost(needFabric, haveFabric, ref glitter)
-            && CoverCost(needPlastic, havePlastic, ref glitter);
+    private int RemoveTokensByType(ResourceTokenType type, int countCost, ref int glitterLeft, ref List<ResourceToken> tokensToReturn)
+    {
+        int removed = 0;
+        for (int i = resourceTokens.Count - 1; i >= 0 && removed < countCost; i--)
+        {
+            if (resourceTokens[i].resourceTokenType == type)
+            {
+                if (resourceTokens[i].resourceTokenType == ResourceTokenType.Glitter)
+                {
+                    glitterLeft--;
+                }
+                tokensToReturn.Add(resourceTokens[i]);
+                resourceTokens.RemoveAt(i);
+                removed++;
+            }
+        }
+        return removed;
+    }
+
+    // Remove specific tokens first, then glitter for any missing
+    private bool RemoveTokens(ResourceTokenType type, int countCost, ref int glitterLeft, ref List<ResourceToken> tokensToReturn)
+    {
+        int removed = RemoveTokensByType(type, countCost, ref glitterLeft, ref tokensToReturn);
+        int missing = countCost - removed;
+
+        if (missing > 0)
+        {
+            int glitterUsed = RemoveTokensByType(ResourceTokenType.Glitter, missing, ref glitterLeft, ref tokensToReturn);
+            removed += glitterUsed;
+        }
+        return removed >= countCost;
     }
 
     private bool SpendCost(Card card)
     {
-        int needDuct = card.CardData.costDuctTape;
-        int needGlue = card.CardData.costGlue;
-        int needWire = card.CardData.costWire;
-        int needFabric = card.CardData.costFabric;
-        int needPlastic = card.CardData.costPlastic;
-
+        List<(ResourceTokenType type, int cost)> tokenCosts = new List<(ResourceTokenType type, int cost)>
+            {
+                (ResourceTokenType.DuctTape, card.CardData.costDuctTape),
+                (ResourceTokenType.Glue, card.CardData.costGlue),
+                (ResourceTokenType.Wire, card.CardData.costWire),
+                (ResourceTokenType.Fabric, card.CardData.costFabric),
+                (ResourceTokenType.Plastic, card.CardData.costPlastic)
+            };
         List<ResourceToken> tokensToReturn = new List<ResourceToken>();
-
-        // Remove specific tokens first, then glitter for any missing
-        bool RemoveTokens(ResourceTokenType type, int countNeeded, ref int glitterLeft)
-        {
-            int removed = 0;
-            for (int i = resourceTokens.Count - 1; i >= 0 && removed < countNeeded; i--)
-            {
-                if (resourceTokens[i].resourceTokenType == type)
-                {
-                    tokensToReturn.Add(resourceTokens[i]);
-                    resourceTokens.RemoveAt(i);
-                    removed++;
-                }
-            }
-            int missing = countNeeded - removed;
-            if (missing > 0)
-            {
-                int glitterUsed = 0;
-                for (int i = resourceTokens.Count - 1; i >= 0 && glitterUsed < missing; i--)
-                {
-                    if (resourceTokens[i].resourceTokenType == ResourceTokenType.Glitter)
-                    {
-                        tokensToReturn.Add(resourceTokens[i]);
-                        resourceTokens.RemoveAt(i);
-                        glitterUsed++;
-                        glitterLeft--;
-                    }
-                }
-                removed += glitterUsed;
-            }
-            return removed >= countNeeded;
-        }
-
         int glitterPool = resourceTokens.Count(t => t.resourceTokenType == ResourceTokenType.Glitter);
 
-        bool ok = RemoveTokens(ResourceTokenType.DuctTape, needDuct, ref glitterPool)
-               && RemoveTokens(ResourceTokenType.Glue, needGlue, ref glitterPool)
-               && RemoveTokens(ResourceTokenType.Wire, needWire, ref glitterPool)
-               && RemoveTokens(ResourceTokenType.Fabric, needFabric, ref glitterPool)
-               && RemoveTokens(ResourceTokenType.Plastic, needPlastic, ref glitterPool);
-
-        if (ok)
+        foreach (var (type, cost) in tokenCosts)
         {
-            // Return all spent resource token to the bag
-            foreach (var resourceToken in tokensToReturn)
+            if (!RemoveTokens(type, cost, ref glitterPool, ref tokensToReturn))
             {
-                ResourceTokenBag.Instance.ReturnResourceTokenToBag(resourceToken);
+                return false;
             }
         }
-        return ok;
+
+        foreach (var resourceToken in tokensToReturn)
+        {
+            ResourceTokenBag.Instance.ReturnResourceTokenToBag(resourceToken);
+        }
+
+        return true;
     }
 
     public bool TryCraftCard(Card card)

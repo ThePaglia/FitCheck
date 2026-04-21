@@ -10,6 +10,7 @@ public class ResourceToken : MonoBehaviour
 
     public static Color GlitterColor;
 
+    // Keep Glitter as last
     public enum ResourceTokenType
     {
         DuctTape,
