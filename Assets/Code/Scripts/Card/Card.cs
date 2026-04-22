@@ -1,12 +1,16 @@
 using UnityEngine;
-[RequireComponent(typeof(CardUI))]
-public class Card : MonoBehaviour
-{
-    [field: SerializeField] public ScriptableCard CardData { get; private set; }
 
-    public void SetUp(ScriptableCard data)
+namespace FitCheck
+{
+    [RequireComponent(typeof(CardUI))]
+    public class Card : MonoBehaviour
     {
-        CardData = data;
-        GetComponent<CardUI>().SetCardUI();
+        [field: SerializeField] public ScriptableCard CardData { get; private set; }
+
+        public void SetUp(ScriptableCard data)
+        {
+            CardData = data;
+            GetComponent<CardUI>().SetCardUI();
+        }
     }
 }

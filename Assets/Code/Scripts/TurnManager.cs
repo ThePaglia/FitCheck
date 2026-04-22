@@ -1,65 +1,68 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TurnManager : MonoBehaviour
+namespace FitCheck
 {
-    private int currentPlayerIndex = 0;
-    private Player currentPlayer;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class TurnManager : MonoBehaviour
     {
-        StartTurn();
-    }
+        private int currentPlayerIndex = 0;
+        private Player currentPlayer;
 
-    private void Update()
-    {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            EndTurn();
-        }
-    }
-
-    public void StartTurn()
-    {
-        currentPlayer = GameManager.Instance.players[currentPlayerIndex];
-        currentPlayer.RefreshActionTokens();
-
-        GameManager.Instance.SwitchCameraToPlayer(currentPlayerIndex);
-
-        currentPlayer.PlayerUI.ClearHand();
-        currentPlayer.PlayerUI.UpdateHandUI(currentPlayer.hand);
-        currentPlayer.PlayerUI.UpdateResourceTokenUI(currentPlayer.resourceTokens);
-
-        Debug.Log($"Player {currentPlayerIndex + 1}'s turn started. Press Space to end turn.");
-    }
-
-    public void EndTurn()
-    {
-        Debug.Log($"Player {currentPlayerIndex + 1}'s turn ended.");
-
-        if (GameManager.Instance.CheckGameOver())
-        {
-            Debug.Log("Game ended");
-            return;
+            StartTurn();
         }
 
-        currentPlayerIndex = (currentPlayerIndex + 1) % GameManager.Instance.players.Count;
-        StartTurn();
-    }
+        private void Update()
+        {
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                EndTurn();
+            }
+        }
 
-    public Player GetCurrentPlayer()
-    {
-        return currentPlayer;
-    }
+        public void StartTurn()
+        {
+            currentPlayer = GameManager.Instance.players[currentPlayerIndex];
+            currentPlayer.RefreshActionTokens();
 
-    public int GetCurrentPlayerIndex()
-    {
-        return currentPlayerIndex;
-    }
+            GameManager.Instance.SwitchCameraToPlayer(currentPlayerIndex);
 
-    public bool CanCurrentPlayerAct()
-    {
-        return currentPlayer.HasAvailableAction();
+            currentPlayer.PlayerUI.ClearHand();
+            currentPlayer.PlayerUI.UpdateHandUI(currentPlayer.hand);
+            currentPlayer.PlayerUI.UpdateResourceTokenUI(currentPlayer.resourceTokens);
+
+            Debug.Log($"Player {currentPlayerIndex + 1}'s turn started. Press Space to end turn.");
+        }
+
+        public void EndTurn()
+        {
+            Debug.Log($"Player {currentPlayerIndex + 1}'s turn ended.");
+
+            if (GameManager.Instance.CheckGameOver())
+            {
+                Debug.Log("Game ended");
+                return;
+            }
+
+            currentPlayerIndex = (currentPlayerIndex + 1) % GameManager.Instance.players.Count;
+            StartTurn();
+        }
+
+        public Player GetCurrentPlayer()
+        {
+            return currentPlayer;
+        }
+
+        public int GetCurrentPlayerIndex()
+        {
+            return currentPlayerIndex;
+        }
+
+        public bool CanCurrentPlayerAct()
+        {
+            return currentPlayer.HasAvailableAction();
+        }
     }
 }

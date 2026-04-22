@@ -1,86 +1,89 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static ScriptableCard;
+using static FitCheck.ScriptableCard;
 
-public class CraftedCardArea : MonoBehaviour
+namespace FitCheck
 {
-    // TODO: Try to fix fast crafting card bug
-    [SerializeField] private float cardSpacing = 0.3f;
-    [SerializeField] private Card prefabScale;
-    private readonly int columns = System.Enum.GetValues(typeof(CardType)).Length;
-
-    private readonly Dictionary<CardType, Card> craftedCards = new Dictionary<CardType, Card>();
-
-    private void Awake()
+    public class CraftedCardArea : MonoBehaviour
     {
-        // Initialize the dictionary with all card types
-        foreach (CardType type in System.Enum.GetValues(typeof(CardType)))
+        // TODO: Try to fix fast crafting card bug
+        [SerializeField] private float cardSpacing = 0.3f;
+        [SerializeField] private Card prefabScale;
+        private readonly int columns = System.Enum.GetValues(typeof(CardType)).Length;
+
+        private readonly Dictionary<CardType, Card> craftedCards = new();
+
+        private void Awake()
         {
-            craftedCards[type] = null;
-        }
-    }
-
-    public void PlaceCraftedCard(Card card)
-    {
-        if (card == null || card.CardData == null) return;
-
-        CardType cardType = card.CardData.cardType;
-
-        // Re-enable 3D rendering
-        MeshRenderer meshRenderer = card.GetComponent<MeshRenderer>();
-        if (meshRenderer != null) meshRenderer.enabled = true;
-
-        Collider collider = card.GetComponent<Collider>();
-        if (collider != null) collider.enabled = true;
-
-        // Disable UI Image component
-        Image cardImage = card.GetComponent<Image>();
-        if (cardImage != null) cardImage.enabled = false;
-
-        // Place old card of the same type back in the Deck
-        if (craftedCards[cardType] != null)
-        {
-            Deck.Instance.ReturnCardToDeck(craftedCards[cardType]);
-        }
-
-        // Store new card
-        craftedCards[cardType] = card;
-
-        // Calculate centered grid position
-        int slotIndex = (int)cardType;
-        float gridWidth = (columns - 1) * cardSpacing;
-        float offsetX = -gridWidth / 2f;
-
-        Vector3 position = new Vector3(slotIndex * cardSpacing + offsetX, 0.1f, 0f);
-
-        // Position and orient the card
-        card.transform.SetParent(transform);
-        card.transform.SetLocalPositionAndRotation(position, Quaternion.Euler(90f, 180f, 0f));
-        card.transform.localScale = prefabScale.transform.localScale;
-        card.gameObject.SetActive(true);
-    }
-
-    public int GetCraftedCardCount()
-    {
-        int count = 0;
-        foreach (Card card in craftedCards.Values)
-        {
-            if (card != null) count++;
-        }
-        return count;
-    }
-
-    public int GetTotalCraftedCardPoints()
-    {
-        int totalPoints = 0;
-        foreach (Card card in craftedCards.Values)
-        {
-            if (card != null && card.CardData != null)
+            // Initialize the dictionary with all card types
+            foreach (CardType type in System.Enum.GetValues(typeof(CardType)))
             {
-                totalPoints += card.CardData.points;
+                craftedCards[type] = null;
             }
         }
-        return totalPoints;
+
+        public void PlaceCraftedCard(Card card)
+        {
+            if (card == null || card.CardData == null) return;
+
+            CardType cardType = card.CardData.cardType;
+
+            // Re-enable 3D rendering
+            MeshRenderer meshRenderer = card.GetComponent<MeshRenderer>();
+            if (meshRenderer != null) meshRenderer.enabled = true;
+
+            Collider collider = card.GetComponent<Collider>();
+            if (collider != null) collider.enabled = true;
+
+            // Disable UI Image component
+            Image cardImage = card.GetComponent<Image>();
+            if (cardImage != null) cardImage.enabled = false;
+
+            // Place old card of the same type back in the Deck
+            if (craftedCards[cardType] != null)
+            {
+                Deck.Instance.ReturnCardToDeck(craftedCards[cardType]);
+            }
+
+            // Store new card
+            craftedCards[cardType] = card;
+
+            // Calculate centered grid position
+            int slotIndex = (int)cardType;
+            float gridWidth = (columns - 1) * cardSpacing;
+            float offsetX = -gridWidth / 2f;
+
+            Vector3 position = new(slotIndex * cardSpacing + offsetX, 0.1f, 0f);
+
+            // Position and orient the card
+            card.transform.SetParent(transform);
+            card.transform.SetLocalPositionAndRotation(position, Quaternion.Euler(90f, 180f, 0f));
+            card.transform.localScale = prefabScale.transform.localScale;
+            card.gameObject.SetActive(true);
+        }
+
+        public int GetCraftedCardCount()
+        {
+            int count = 0;
+            foreach (Card card in craftedCards.Values)
+            {
+                if (card != null) count++;
+            }
+            return count;
+        }
+
+        public int GetTotalCraftedCardPoints()
+        {
+            int totalPoints = 0;
+            foreach (Card card in craftedCards.Values)
+            {
+                if (card != null && card.CardData != null)
+                {
+                    totalPoints += card.CardData.points;
+                }
+            }
+            return totalPoints;
+        }
     }
 }

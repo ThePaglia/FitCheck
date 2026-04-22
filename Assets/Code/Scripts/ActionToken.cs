@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class ActionToken : MonoBehaviour
+namespace FitCheck
 {
-    public bool IsAvailable { get; private set; } = true;
-
-    public void Consume()
+    public class ActionToken : MonoBehaviour
     {
-        IsAvailable = false;
-    }
+        public bool IsAvailable { get; private set; } = true;
 
-    public void Refresh()
-    {
-        IsAvailable = true;
+        public void Consume()
+        {
+            IsAvailable = false;
+        }
+
+        public void Refresh()
+        {
+            IsAvailable = true;
+        }
     }
 }

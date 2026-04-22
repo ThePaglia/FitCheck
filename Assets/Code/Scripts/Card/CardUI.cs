@@ -1,47 +1,50 @@
-using UnityEngine;
-
-[RequireComponent(typeof(Card))]
-public class CardUI : MonoBehaviour
+namespace FitCheck
 {
-    private Card card;
-    [Header("Prefab Elements")] //references to objects in the card prefab
-    [SerializeField] private MeshRenderer cardRenderer;
-    [SerializeField] private int materialIndex = 0;
+    using UnityEngine;
 
-    private void Awake()
+    [RequireComponent(typeof(Card))]
+    public class CardUI : MonoBehaviour
     {
-        card = GetComponent<Card>();
-        if (cardRenderer == null)
+        private Card card;
+        [Header("Prefab Elements")] //references to objects in the card prefab
+        [SerializeField] private MeshRenderer cardRenderer;
+        [SerializeField] private int materialIndex = 0;
+
+        private void Awake()
         {
-            cardRenderer = GetComponent<MeshRenderer>();
+            card = GetComponent<Card>();
+            if (cardRenderer == null)
+            {
+                cardRenderer = GetComponent<MeshRenderer>();
+            }
+            SetCardUI();
         }
-        SetCardUI();
-    }
 
-    public void SetCardUI()
-    {
-        if (card != null && card.CardData != null)
+        public void SetCardUI()
         {
-            SetCardMaterial();
+            if (card != null && card.CardData != null)
+            {
+                SetCardMaterial();
+            }
         }
-    }
 
-    private void SetCardMaterial()
-    {
-        if (card.CardData.cardImage == null) return;
-
-        // Get materials array
-        Material[] sharedMaterials = cardRenderer.sharedMaterials;
-
-        if (materialIndex < sharedMaterials.Length)
+        private void SetCardMaterial()
         {
-            sharedMaterials[materialIndex] = new Material(sharedMaterials[materialIndex]);
-            sharedMaterials[materialIndex].mainTexture = card.CardData.cardImage;
-            cardRenderer.materials = sharedMaterials;
-        }
-        else
-        {
-            Debug.LogWarning("Material index is out of range of the materials array.");
+            if (card.CardData.cardImage == null) return;
+
+            // Get materials array
+            Material[] sharedMaterials = cardRenderer.sharedMaterials;
+
+            if (materialIndex < sharedMaterials.Length)
+            {
+                sharedMaterials[materialIndex] = new Material(sharedMaterials[materialIndex]);
+                sharedMaterials[materialIndex].mainTexture = card.CardData.cardImage;
+                cardRenderer.materials = sharedMaterials;
+            }
+            else
+            {
+                Debug.LogWarning("Material index is out of range of the materials array.");
+            }
         }
     }
 }

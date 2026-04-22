@@ -1,226 +1,228 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace FitCheck
 {
-    // TODO: Refactor every public variable with get set c#
-    public static GameManager Instance { get; private set; }
-    public List<Player> players;
-    public TurnManager turnManager;
-    [SerializeField] private Camera mainCamera;
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (Instance == null)
+        public static GameManager Instance { get; private set; }
+        public List<Player> players;
+        public TurnManager turnManager;
+        [SerializeField] private Camera mainCamera;
+
+        private void Awake()
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    public void SwitchCameraToPlayer(int playerIndex)
-    {
-        if (playerIndex < 0 || playerIndex >= players.Count) return;
-
-        Player targetPlayer = players[playerIndex];
-        if (mainCamera != null && targetPlayer.cameraPosition != null)
-        {
-            mainCamera.transform.SetPositionAndRotation(targetPlayer.cameraPosition.position, targetPlayer.cameraPosition.rotation);
-        }
-    }
-
-    private bool CheckTurnManagerAndCurrentPlayer()
-    {
-        if (turnManager == null)
-        {
-            Debug.LogWarning("TurnManager not set!");
-            return false;
-        }
-
-        Player currentPlayer = turnManager.GetCurrentPlayer();
-
-        if (currentPlayer == null)
-        {
-            Debug.LogWarning("No current player!");
-            return false;
-        }
-
-        return true;
-    }
-
-    private bool CheckActionToken()
-    {
-        if (!turnManager.CanCurrentPlayerAct())
-        {
-            Debug.Log("No available action tokens for current player.");
-            return false;
-        }
-        return true;
-    }
-
-    public bool OnDeckClicked()
-    {
-        if (!CheckTurnManagerAndCurrentPlayer())
-        {
-            return false;
-        }
-
-        if (!CheckActionToken())
-        {
-            return false;
-        }
-
-        Player currentPlayer = turnManager.GetCurrentPlayer();
-        if (currentPlayer.hand.Count >= currentPlayer.HandLimit)
-        {
-            Debug.Log("Hand limit reached. Cannot draw more cards.");
-            return false;
-        }
-
-        currentPlayer.UseActionToken(); // Drawing costs an action
-
-        Card drawnCard = Deck.Instance.Draw();
-        currentPlayer.DrawCard(drawnCard);
-
-        return true;
-    }
-
-    public bool OnCardInPlayAreaClicked(Card card)
-    {
-        if (!CheckTurnManagerAndCurrentPlayer())
-        {
-            return false;
-        }
-
-        if (!CheckActionToken())
-        {
-            return false;
-        }
-
-        Player currentPlayer = turnManager.GetCurrentPlayer();
-        if (currentPlayer.hand.Count >= currentPlayer.HandLimit)
-        {
-            Debug.Log("Hand limit reached. Cannot draw more cards.");
-            return false;
-        }
-        currentPlayer.UseActionToken(); // Drawing costs an action
-        currentPlayer.DrawCard(card);
-
-        return true;
-    }
-
-    public bool OnResourceTokenBagClicked()
-    {
-        if (!CheckTurnManagerAndCurrentPlayer())
-        {
-            return false;
-        }
-
-        if (!CheckActionToken())
-        {
-            return false;
-        }
-
-        Player currentPlayer = turnManager.GetCurrentPlayer();
-        if (currentPlayer.resourceTokens.Count >= currentPlayer.ResourceTokenLimit)
-        {
-            Debug.Log("Resource token limit reached. Cannot draw more tokens.");
-            return false;
-        }
-
-        currentPlayer.UseActionToken(); // Drawing costs an action
-
-        // Draw two random resource tokens
-        ResourceToken drawnResourceToken = ResourceTokenBag.Instance.Draw();
-        currentPlayer.DrawResourceToken(drawnResourceToken);
-
-        drawnResourceToken = ResourceTokenBag.Instance.Draw();
-        currentPlayer.DrawResourceToken(drawnResourceToken);
-
-
-        return true;
-    }
-
-    // TODO: Let the player pick 2 normal tokens for 1 action token but only 1 glitter one for 1 action token (joker, counts as every other normal one)
-    public bool OnResourceTokenInPlayAreaClicked(ResourceToken token)
-    {
-        if (!CheckTurnManagerAndCurrentPlayer())
-        {
-            return false;
-        }
-
-        if (!CheckActionToken())
-        {
-            return false;
-        }
-
-        Player currentPlayer = turnManager.GetCurrentPlayer();
-        if (currentPlayer.resourceTokens.Count >= currentPlayer.ResourceTokenLimit)
-        {
-            Debug.Log("Resource token limit reached. Cannot draw more tokens.");
-            return false;
-        }
-        currentPlayer.UseActionToken(); // Drawing costs an action
-        currentPlayer.DrawResourceToken(token);
-
-        return true;
-    }
-
-    public bool OnCardInHandClicked(Card card)
-    {
-        if (!CheckTurnManagerAndCurrentPlayer())
-        {
-            return false;
-        }
-
-        Player currentPlayer = turnManager.GetCurrentPlayer();
-
-        if (!currentPlayer.TryCraftCard(card))
-        {
-            Debug.Log("Cannot craft this card (insufficient resources or not in hand).");
-            return false;
-        }
-
-        return true;
-    }
-
-    public bool CheckGameOver()
-    {
-        foreach (Player player in players)
-        {
-            if (player.CraftedCardArea.GetCraftedCardCount() >= 5)
+            if (Instance == null)
             {
-                Debug.Log("Game over");
-                GetWinner();
-                // TODO: Win screen UI
-                return true;
+                Instance = this;
             }
-        }
-        return false;
-    }
-
-    private void GetWinner()
-    {
-        // Find player with highest score
-        Player winner = players[0];
-        int highestScore = winner.CraftedCardArea.GetTotalCraftedCardPoints();
-
-        for (int i = 1; i < players.Count; i++)
-        {
-            int playerScore = players[i].CraftedCardArea.GetTotalCraftedCardPoints();
-            if (playerScore > highestScore)
+            else
             {
-                winner = players[i];
-                highestScore = playerScore;
+                Destroy(gameObject);
             }
         }
 
-        int winnerIndex = players.IndexOf(winner);
-        Debug.Log($"Player {winnerIndex + 1} wins with {highestScore} points!");
+        public void SwitchCameraToPlayer(int playerIndex)
+        {
+            if (playerIndex < 0 || playerIndex >= players.Count) return;
+
+            Player targetPlayer = players[playerIndex];
+            if (mainCamera != null && targetPlayer.cameraPosition != null)
+            {
+                mainCamera.transform.SetPositionAndRotation(targetPlayer.cameraPosition.position, targetPlayer.cameraPosition.rotation);
+            }
+        }
+
+        private bool CheckTurnManagerAndCurrentPlayer()
+        {
+            if (turnManager == null)
+            {
+                Debug.LogWarning("TurnManager not set!");
+                return false;
+            }
+
+            Player currentPlayer = turnManager.GetCurrentPlayer();
+
+            if (currentPlayer == null)
+            {
+                Debug.LogWarning("No current player!");
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckActionToken()
+        {
+            if (!turnManager.CanCurrentPlayerAct())
+            {
+                Debug.Log("No available action tokens for current player.");
+                return false;
+            }
+            return true;
+        }
+
+        public bool OnDeckClicked()
+        {
+            if (!CheckTurnManagerAndCurrentPlayer())
+            {
+                return false;
+            }
+
+            if (!CheckActionToken())
+            {
+                return false;
+            }
+
+            Player currentPlayer = turnManager.GetCurrentPlayer();
+            if (currentPlayer.hand.Count >= currentPlayer.HandLimit)
+            {
+                Debug.Log("Hand limit reached. Cannot draw more cards.");
+                return false;
+            }
+
+            currentPlayer.UseActionToken(); // Drawing costs an action
+
+            Card drawnCard = Deck.Instance.Draw();
+            currentPlayer.DrawCard(drawnCard);
+
+            return true;
+        }
+
+        public bool OnCardInPlayAreaClicked(Card card)
+        {
+            if (!CheckTurnManagerAndCurrentPlayer())
+            {
+                return false;
+            }
+
+            if (!CheckActionToken())
+            {
+                return false;
+            }
+
+            Player currentPlayer = turnManager.GetCurrentPlayer();
+            if (currentPlayer.hand.Count >= currentPlayer.HandLimit)
+            {
+                Debug.Log("Hand limit reached. Cannot draw more cards.");
+                return false;
+            }
+            currentPlayer.UseActionToken(); // Drawing costs an action
+            currentPlayer.DrawCard(card);
+
+            return true;
+        }
+
+        public bool OnResourceTokenBagClicked()
+        {
+            if (!CheckTurnManagerAndCurrentPlayer())
+            {
+                return false;
+            }
+
+            if (!CheckActionToken())
+            {
+                return false;
+            }
+
+            Player currentPlayer = turnManager.GetCurrentPlayer();
+            if (currentPlayer.resourceTokens.Count >= currentPlayer.ResourceTokenLimit)
+            {
+                Debug.Log("Resource token limit reached. Cannot draw more tokens.");
+                return false;
+            }
+
+            currentPlayer.UseActionToken(); // Drawing costs an action
+
+            // Draw two random resource tokens
+            ResourceToken drawnResourceToken = ResourceTokenBag.Instance.Draw();
+            currentPlayer.DrawResourceToken(drawnResourceToken);
+
+            drawnResourceToken = ResourceTokenBag.Instance.Draw();
+            currentPlayer.DrawResourceToken(drawnResourceToken);
+
+
+            return true;
+        }
+
+        // TODO: Let the player pick 2 normal tokens for 1 action token but only 1 glitter one for 1 action token (joker, counts as every other normal one)
+        public bool OnResourceTokenInPlayAreaClicked(ResourceToken token)
+        {
+            if (!CheckTurnManagerAndCurrentPlayer())
+            {
+                return false;
+            }
+
+            if (!CheckActionToken())
+            {
+                return false;
+            }
+
+            Player currentPlayer = turnManager.GetCurrentPlayer();
+            if (currentPlayer.resourceTokens.Count >= currentPlayer.ResourceTokenLimit)
+            {
+                Debug.Log("Resource token limit reached. Cannot draw more tokens.");
+                return false;
+            }
+            currentPlayer.UseActionToken(); // Drawing costs an action
+            currentPlayer.DrawResourceToken(token);
+
+            return true;
+        }
+
+        public bool OnCardInHandClicked(Card card)
+        {
+            if (!CheckTurnManagerAndCurrentPlayer())
+            {
+                return false;
+            }
+
+            Player currentPlayer = turnManager.GetCurrentPlayer();
+
+            if (!currentPlayer.TryCraftCard(card))
+            {
+                Debug.Log("Cannot craft this card (insufficient resources or not in hand).");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool CheckGameOver()
+        {
+            foreach (Player player in players)
+            {
+                if (player.CraftedCardArea.GetCraftedCardCount() >= 5)
+                {
+                    Debug.Log("Game over");
+                    GetWinner();
+                    // TODO: Win screen UI
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void GetWinner()
+        {
+            // Find player with highest score
+            Player winner = players[0];
+            int highestScore = winner.CraftedCardArea.GetTotalCraftedCardPoints();
+
+            for (int i = 1; i < players.Count; i++)
+            {
+                int playerScore = players[i].CraftedCardArea.GetTotalCraftedCardPoints();
+                if (playerScore > highestScore)
+                {
+                    winner = players[i];
+                    highestScore = playerScore;
+                }
+            }
+
+            int winnerIndex = players.IndexOf(winner);
+            Debug.Log($"Player {winnerIndex + 1} wins with {highestScore} points!");
+
+        }
 
     }
-
 }

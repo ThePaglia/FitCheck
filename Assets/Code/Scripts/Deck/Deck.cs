@@ -2,158 +2,157 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Deck : MonoBehaviour
+namespace FitCheck
 {
-    public static Deck Instance { get; private set; } //Singleton
-    [SerializeField] private ScriptableDeck deck;
-    [SerializeField] private Card cardPrefab;
-
-    [Header("Visual Settings")]
-    [SerializeField] private float heightDecreasePerCard = 0.005f;
-    [SerializeField] private float minHeightBeforeInvisible = 0.005f;
-    [SerializeField] private MeshRenderer meshRenderer;
-
-    public List<Card> drawPile = new List<Card>();
-
-    private void Awake()
+    public class Deck : MonoBehaviour
     {
-        if (meshRenderer == null)
+        public static Deck Instance { get; private set; } //Singleton
+        [SerializeField] private ScriptableDeck deck;
+        [SerializeField] private Card cardPrefab;
+
+        [Header("Visual Settings")]
+        [SerializeField] private float heightDecreasePerCard = 0.005f;
+        [SerializeField] private float minHeightBeforeInvisible = 0.005f;
+        [SerializeField] private MeshRenderer meshRenderer;
+
+        public List<Card> drawPile = new();
+
+        private void Awake()
         {
-            meshRenderer = GetComponent<MeshRenderer>();
+            if (meshRenderer == null)
+            {
+                meshRenderer = GetComponent<MeshRenderer>();
+            }
+            // Typical singleton declaration
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            SpawnFromScriptableDeck();
         }
-        // Typical singleton declaration
-        if (Instance == null)
+
+        private void SpawnFromScriptableDeck()
         {
-            Instance = this;
+            if (deck == null || deck.CardsInDeck == null || cardPrefab == null)
+            {
+                Debug.LogWarning("Deck or Card Prefab is not assigned.");
+                return;
+            }
+            drawPile.Clear();
+            foreach (var cardData in deck.CardsInDeck)
+            {
+                var card = SpawnCard(cardData);
+                drawPile.Add(card);
+                card.gameObject.SetActive(false); // Initially inactive
+            }
+            drawPile = Shuffle(drawPile);
         }
-        else
+
+        private Card SpawnCard(ScriptableCard data)
         {
-            Destroy(gameObject);
+            Card go = Instantiate(cardPrefab, meshRenderer.transform.position + Vector3.up * 0.1f, Quaternion.identity, transform);
+            Card card = go.GetComponent<Card>();
+            card.SetUp(data);
+            return card;
         }
 
-        SpawnFromScriptableDeck();
-    }
-
-    private void SpawnFromScriptableDeck()
-    {
-        if (deck == null || deck.CardsInDeck == null || cardPrefab == null)
+        private void Update()
         {
-            Debug.LogWarning("Deck or Card Prefab is not assigned.");
-            return;
-        }
-        drawPile.Clear();
-        foreach (var cardData in deck.CardsInDeck)
-        {
-            var card = SpawnCard(cardData);
-            drawPile.Add(card);
-            card.gameObject.SetActive(false); // Initially inactive
-        }
-        drawPile = Shuffle(drawPile);
-    }
+            // Use Raycasting to detect mouse clicks on the deck
+            if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
 
-    private Card SpawnCard(ScriptableCard data)
-    {
-        Card go = Instantiate(cardPrefab, meshRenderer.transform.position + Vector3.up * 0.1f, Quaternion.identity, transform);
-        Card card = go.GetComponent<Card>();
-        card.SetUp(data);
-        return card;
-    }
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-    private void Update()
-    {
-        // Use Raycasting to detect mouse clicks on the deck
-        if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame) return;
-
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider.gameObject == gameObject)
+            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject == gameObject)
             {
                 Debug.Log("Deck clicked!");
                 GameManager.Instance.OnDeckClicked();
             }
         }
-    }
 
-    public Card Draw()
-    {
-        if (drawPile.Count == 0)
+        public Card Draw()
         {
-            Debug.Log("No more cards to draw.");
-            return null;
+            if (drawPile.Count == 0)
+            {
+                Debug.Log("No more cards to draw.");
+                return null;
+            }
+
+            Card drawnCard = drawPile[0];
+            drawPile.RemoveAt(0);
+            drawnCard.gameObject.SetActive(true);
+
+            ShrinkDeck();
+
+            return drawnCard;
         }
 
-        Card drawnCard = drawPile[0];
-        drawPile.RemoveAt(0);
-        drawnCard.gameObject.SetActive(true);
-
-        ShrinkDeck();
-
-        return drawnCard;
-    }
-
-    public void ReturnCardToDeck(Card card)
-    {
-        if (card == null) return;
-
-        card.gameObject.SetActive(false);
-        card.transform.SetParent(transform);
-        drawPile.Add(card);
-
-        EnlargeDeck();
-
-        drawPile = Shuffle(drawPile);
-    }
-
-    private void EnlargeDeck()
-    {
-        Vector3 currentScale = transform.localScale;
-        Vector3 currentPosition = transform.position;
-
-        currentScale.y += heightDecreasePerCard;
-        if (currentScale.y >= minHeightBeforeInvisible)
+        public void ReturnCardToDeck(Card card)
         {
-            meshRenderer.enabled = true;
+            if (card == null) return;
 
-            // Adjust position to keep the deck grounded
-            currentPosition.y += heightDecreasePerCard / 2;
+            card.gameObject.SetActive(false);
+            card.transform.SetParent(transform);
+            drawPile.Add(card);
 
-            transform.localScale = currentScale;
-            transform.position = currentPosition;
+            EnlargeDeck();
+
+            drawPile = Shuffle(drawPile);
         }
-    }
 
-    private void ShrinkDeck()
-    {
-        Vector3 currentScale = transform.localScale;
-        Vector3 currentPosition = transform.position;
-
-        currentScale.y -= heightDecreasePerCard;
-        if (currentScale.y < minHeightBeforeInvisible)
+        private void EnlargeDeck()
         {
-            meshRenderer.enabled = false;
-        }
-        else
-        {
-            // Adjust position to keep the deck grounded
-            currentPosition.y -= heightDecreasePerCard / 2;
+            Vector3 currentScale = transform.localScale;
+            Vector3 currentPosition = transform.position;
 
-            transform.localScale = currentScale;
-            transform.position = currentPosition;
-        }
-    }
+            currentScale.y += heightDecreasePerCard;
+            if (currentScale.y >= minHeightBeforeInvisible)
+            {
+                meshRenderer.enabled = true;
 
-    public List<T> Shuffle<T>(List<T> list)
-    {
-        for (int i = 0; i < list.Count; i++)
-        {
-            T temp = list[i];
-            int randomIndex = Random.Range(i, list.Count);
-            list[i] = list[randomIndex];
-            list[randomIndex] = temp;
+                // Adjust position to keep the deck grounded
+                currentPosition.y += heightDecreasePerCard / 2;
+
+                transform.localScale = currentScale;
+                transform.position = currentPosition;
+            }
         }
-        return list;
+
+        private void ShrinkDeck()
+        {
+            Vector3 currentScale = transform.localScale;
+            Vector3 currentPosition = transform.position;
+
+            currentScale.y -= heightDecreasePerCard;
+            if (currentScale.y < minHeightBeforeInvisible)
+            {
+                meshRenderer.enabled = false;
+            }
+            else
+            {
+                // Adjust position to keep the deck grounded
+                currentPosition.y -= heightDecreasePerCard / 2;
+
+                transform.localScale = currentScale;
+                transform.position = currentPosition;
+            }
+        }
+
+        public static List<T> Shuffle<T>(List<T> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                T temp = list[i];
+                int randomIndex = Random.Range(i, list.Count);
+                list[i] = list[randomIndex];
+                list[randomIndex] = temp;
+            }
+            return list;
+        }
     }
 }
